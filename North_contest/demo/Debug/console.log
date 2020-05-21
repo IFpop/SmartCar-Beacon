@@ -1,0 +1,118 @@
+
+**** Build of configuration Debug for project LQ_TC26xB_LIBtasking ****
+
+"C:\\Program Files\\TASKING\\TriCore v6.3r1\\ctc\\bin\\amk" -j2 all 
+Compiling LQ_ADC_7Mic.c
+Compiling LQ_Atom_Motor.c
+Compiling LQ_CAMERA.c
+Compiling LQ_EEPROM_TEST.c
+Compiling LQ_FFT_TEST.c
+Compiling LQ_GPIO_ExInt.c
+Compiling LQ_GPIO_KEY.c
+Compiling LQ_GPIO_LED.c
+Compiling LQ_GPT_mini512.c
+Compiling LQ_I2C_9AX.c
+Compiling LQ_I2C_MPU6050.c
+Compiling LQ_I2C_VL53.c
+Compiling LQ_ICM20602.c
+Compiling LQ_MT9V034.c
+Compiling LQ_OLED096.c
+Compiling LQ_STM_Timer.c
+Compiling LQ_TFT18.c
+Compiling LQ_Tim_InputCature.c
+Compiling LQ_Tom_Servo.c
+Compiling LQ_UART_Bluetooth.c
+Compiling LQ_ADC.c
+Compiling LQ_CCU6.c
+Compiling LQ_DMA.c
+Compiling LQ_EEPROM.c
+Compiling LQ_EMEM.c
+Compiling LQ_FFT.c
+Compiling LQ_GPIO.c
+Compiling LQ_GPT12_ENC.c
+Compiling LQ_GTM.c
+Compiling LQ_QSPI.c
+Compiling LQ_SOFTI2C.c
+Compiling LQ_SPI.c
+Compiling LQ_STM.c
+Compiling LQ_UART.c
+Compiling Cpu0_Main.c
+Compiling Cpu1_Main.c
+Compiling IfxAsclin_cfg.c
+Compiling IfxCcu6_cfg.c
+Compiling IfxCif_cfg.c
+Compiling IfxCpu_cfg.c
+Compiling IfxDma_cfg.c
+Compiling IfxEmem_cfg.c
+Compiling IfxEray_cfg.c
+Compiling IfxFlash_cfg.c
+Compiling IfxGtm_cfg.c
+Compiling IfxHssl_cfg.c
+Compiling IfxI2c_cfg.c
+Compiling IfxMsc_cfg.c
+Compiling IfxMtu_cfg.c
+Compiling IfxMultican_cfg.c
+Compiling IfxPort_cfg.c
+Compiling IfxPsi5_cfg.c
+Compiling IfxQspi_cfg.c
+Compiling IfxScu_cfg.c
+Compiling IfxSent_cfg.c
+Compiling IfxSmu_cfg.c
+Compiling IfxSrc_cfg.c
+Compiling IfxStm_cfg.c
+Compiling IfxVadc_cfg.c
+Compiling Ifx_CircularBuffer.asm.c
+Compiling Ifx_CircularBuffer.c
+Compiling Ifx_Fifo.c
+Compiling Ifx_InternalMux.c
+Compiling IfxAsclin_PinMap.c
+Compiling IfxCcu6_PinMap.c
+Compiling IfxCif_PinMap.c
+Compiling IfxDsadc_PinMap.c
+Compiling IfxEray_PinMap.c
+Compiling IfxEth_PinMap.c
+Compiling IfxGpt12_PinMap.c
+Compiling IfxGtm_PinMap.c
+Compiling IfxI2c_PinMap.c
+Compiling IfxMsc_PinMap.c
+Compiling IfxMultican_PinMap.c
+Compiling IfxPort_PinMap.c
+Compiling IfxPsi5_PinMap.c
+Compiling IfxPsi5s_PinMap.c
+Compiling IfxQspi_PinMap.c
+Compiling IfxScu_PinMap.c
+Compiling IfxSent_PinMap.c
+Compiling IfxSmu_PinMap.c
+Compiling IfxVadc_PinMap.c
+Compiling IfxAsclin_Asc.c
+Compiling IfxAsclin_Lin.c
+Compiling IfxAsclin_Spi.c
+Compiling IfxAsclin.c
+Compiling IfxCcu6_Icu.c
+Compiling IfxCcu6_PwmBc.c
+Compiling IfxCcu6_PwmHl.c
+Compiling IfxCcu6.c
+Compiling IfxCcu6_Timer.c
+Compiling IfxCcu6_TimerWithTrigger.c
+Compiling IfxCcu6_TPwm.c
+Compiling IfxCif_Cam.c
+Compiling IfxCif.c
+Compiling IfxCpu_CStart0.c
+Compiling IfxCpu_CStart1.c
+Compiling IfxCpu_Irq.c
+Compiling IfxCpu.c
+Compiling IfxCpu_Trap.c
+Compiling IfxDma_Dma.c
+Compiling IfxDma.c
+Compiling IfxDsadc_Dsadc.c
+Compiling IfxDsadc_Rdc.c
+
+(Command canceled)
+Time consumed: 49822 ms
+**** End of build ****
+
+Tool info: 
+TASKING VX-toolset for TriCore: control program v6.3r1 Build 19041558
+TASKING VX-toolset for TriCore: C compiler v6.3r1 Build 19041558 SN 99381935
+TASKING VX-toolset for TriCore: assembler v6.3r1 Build 19041558
+TASKING program builder v6.3r1 Build 19041558
