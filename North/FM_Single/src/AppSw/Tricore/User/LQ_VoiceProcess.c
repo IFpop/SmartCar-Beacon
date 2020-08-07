@@ -181,9 +181,9 @@ void VoiceProcess(void)
 		prodatsfft((int16_t* )&acorIndex,(int16_t *)g_adc0Data[AdcBuffIndex],(int16_t *)g_adc1Data[AdcBuffIndex],(int16_t *)g_adc3Data[AdcBuffIndex],(int16_t *)g_adc2Data[AdcBuffIndex],ADC_DATA_LEN);
 
 		// 计算距离
-		S2 = (4096-acorIndex[0])*346*0.01;//单位cm
-		S1 = (4096-acorIndex[1])*346*0.01;
-		S_sub = (4096-acorIndex[2])*346*0.01;
+		S2 = (2048-acorIndex[0])*346*0.01;//单位cm
+		S1 = (2048-acorIndex[1])*346*0.01;
+		S_sub = (2048-acorIndex[2])*346*0.01;
 		// S2 = (1024-acorIndex[0])*346*0.01;//单位cm
 		// S1 = (1024-acorIndex[1])*346*0.01;
 		// S_sub = (1024-acorIndex[2])*346*0.01;

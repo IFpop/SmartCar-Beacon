@@ -36,24 +36,24 @@ void prodatsfft(int16_t* acorIndex,int16_t * Data1, int16_t * Data2,int16_t * Da
 		In4[i].real = Data4[i];
 		In4[i].imag = 0;
 	}
-	for(i = L ; i < nL ; i++){
-		In1[i].real = 0;
-		In1[i].imag = 0;
-		In2[i].real = 0;
-		In2[i].imag = 0;
-		In3[i].real = 0;
-		In3[i].imag = 0;
-		In4[i].real = 0;
-		In4[i].imag = 0;	
-	}
-	Ifx_FftF32_radix2(Out1, In1, nL);
-	Ifx_FftF32_radix2(Out2, In2, nL);
-	Ifx_FftF32_radix2(Out3, In3, nL);
-	Ifx_FftF32_radix2(Out4, In4, nL);
-	// Ifx_FftF32_radix2(Out1, In1, L);
-	// Ifx_FftF32_radix2(Out2, In2, L);
-	// Ifx_FftF32_radix2(Out3, In3, L);
-	// Ifx_FftF32_radix2(Out4, In4, L);
+	// for(i = L ; i < nL ; i++){
+	// 	In1[i].real = 0;
+	// 	In1[i].imag = 0;
+	// 	In2[i].real = 0;
+	// 	In2[i].imag = 0;
+	// 	In3[i].real = 0;
+	// 	In3[i].imag = 0;
+	// 	In4[i].real = 0;
+	// 	In4[i].imag = 0;	
+	// }
+	// Ifx_FftF32_radix2(Out1, In1, nL);
+	// Ifx_FftF32_radix2(Out2, In2, nL);
+	// Ifx_FftF32_radix2(Out3, In3, nL);
+	// Ifx_FftF32_radix2(Out4, In4, nL);
+	Ifx_FftF32_radix2(Out1, In1, L);
+	Ifx_FftF32_radix2(Out2, In2, L);
+	Ifx_FftF32_radix2(Out3, In3, L);
+	Ifx_FftF32_radix2(Out4, In4, L);
 	//计算
 	for(i = 0 ; i < nL ; i++){
 	// for(i = 0 ; i < L ; i++){
@@ -81,10 +81,10 @@ void prodatsfft(int16_t* acorIndex,int16_t * Data1, int16_t * Data2,int16_t * Da
 //		In4[i].imag = In4[i].imag/abs_H;
 	}
 
-	Ifx_FftF32_radix2I(Out2, In2, nL);
-	Ifx_FftF32_radix2I(Out3, In3, nL);
-	Ifx_FftF32_radix2I(Out4, In4, nL);
-	for(i = 0 ; i < nL ; i++){//不需要从头到尾找最值 最值只可能出现在尾部500cm/332.3*10000=150.5个数据点
+	Ifx_FftF32_radix2I(Out2, In2, L);
+	Ifx_FftF32_radix2I(Out3, In3, L);
+	Ifx_FftF32_radix2I(Out4, In4, L);
+	for(i = 1830 ; i < L ; i++){//不需要从头到尾找最值 最值只可能出现在尾部500cm/332.3*10000=150.5个数据点
 		if(maxvalue[0] < Out2[i].real){
 			maxvalue[0] = Out2[i].real;
 			acorIndex[0] = i;//用于计算S2的下标

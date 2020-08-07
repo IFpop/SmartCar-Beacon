@@ -19,8 +19,8 @@
 #ifndef SRC_APPSW_TRICORE_MAIN_LQ_SMARTCAR_H_
 #define SRC_APPSW_TRICORE_MAIN_LQ_SMARTCAR_H_
 
-//#define ADC_DATA_LEN    2048
-#define ADC_DATA_LEN    1024
+#define ADC_DATA_LEN    2048
+// #define ADC_DATA_LEN    1024
 
 #define ChangeState 10  // 设置状态改变值
 #define obacle_length 20.5   // 避障距离
