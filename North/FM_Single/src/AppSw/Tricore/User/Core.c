@@ -80,72 +80,72 @@ void prodatsfft(int16_t* acorIndex,int16_t * Data1, int16_t * Data2,int16_t * Da
 //		In4[i].imag = In4[i].imag/abs_H;
 	}
 
-	uint16_t New_length = L*2;
-	j = 0;
-	for(i = 0 ; i < New_length ; i++){
-		if(i < L/2){
-			In1[i] = In2[j++];
-		}
-		else if(New_length - i < L/2){//后部分赋值
-			if(j >= L){
-				In1[i].imag = 0;
-				In1[i].real = 0;
-			}
-			else
-				In1[i] = In2[j++];
-		}
-		else{
-			In1[i].imag = 0;
-			In1[i].real = 0;
-		}
-	}
-	Ifx_FftF32_radix2I(Out2, In1, New_length);
+//	uint16_t New_length = L*2;
+//	j = 0;
+//	for(i = 0 ; i < New_length ; i++){
+//		if(i < L/2){
+//			In1[i] = In2[j++];
+//		}
+//		else if(New_length - i < L/2){//后部分赋值
+//			if(j >= L){
+//				In1[i].imag = 0;
+//				In1[i].real = 0;
+//			}
+//			else
+//				In1[i] = In2[j++];
+//		}
+//		else{
+//			In1[i].imag = 0;
+//			In1[i].real = 0;
+//		}
+//	}
+//	Ifx_FftF32_radix2I(Out2, In1, New_length);
+//
+//
+//	j = 0;
+//	for(i = 0 ; i < New_length ; i++){
+//		if(i < L){
+//			In1[i] = In3[j++];
+//		}
+//		else if(New_length - i < L){//后部分赋值
+//			if(j >= L){
+//				In1[i].imag = 0;
+//				In1[i].real = 0;
+//			}
+//			else
+//				In1[i] = In3[j++];
+//		}
+//		else{
+//			In1[i].imag = 0;
+//			In1[i].real = 0;
+//		}
+//	}
+//	Ifx_FftF32_radix2I(Out3, In1, New_length);
+//
+//	j = 0;
+//	for(i = 0 ; i < New_length ; i++){
+//		if(i < L){
+//			In1[i] = In4[j++];
+//		}
+//		else if(New_length - i < L){//后部分赋值
+//			if(j >= L){
+//				In1[i].imag = 0;
+//				In1[i].real = 0;
+//			}
+//			else
+//				In1[i] = In4[j++];
+//		}
+//		else{
+//			In1[i].imag = 0;
+//			In1[i].real = 0;
+//		}
+//	}
+	// Ifx_FftF32_radix2I(Out3, In1, New_length);
 
-
-	j = 0;
-	for(i = 0 ; i < New_length ; i++){
-		if(i < L){
-			In1[i] = In3[j++];
-		}
-		else if(New_length - i < L){//后部分赋值
-			if(j >= L){
-				In1[i].imag = 0;
-				In1[i].real = 0;
-			}
-			else
-				In1[i] = In3[j++];
-		}
-		else{
-			In1[i].imag = 0;
-			In1[i].real = 0;
-		}
-	}
-	Ifx_FftF32_radix2I(Out3, In1, New_length);
-
-	j = 0;
-	for(i = 0 ; i < New_length ; i++){
-		if(i < L){
-			In1[i] = In4[j++];
-		}
-		else if(New_length - i < L){//后部分赋值
-			if(j >= L){
-				In1[i].imag = 0;
-				In1[i].real = 0;
-			}
-			else
-				In1[i] = In4[j++];
-		}
-		else{
-			In1[i].imag = 0;
-			In1[i].real = 0;
-		}
-	}
-	Ifx_FftF32_radix2I(Out3, In1, New_length);
-
-//	Ifx_FftF32_radix2I(Out2, In2, L);
-//	Ifx_FftF32_radix2I(Out3, In3, L);
-//	Ifx_FftF32_radix2I(Out4, In4, L);
-	for(i = 0 ; i < New_length ; i++){//不需要从头到尾找最值 最值只可能出现在尾部500cm/332.3*10000=150.5个数据点
+	Ifx_FftF32_radix2I(Out2, In2, L);
+	Ifx_FftF32_radix2I(Out3, In3, L);
+	Ifx_FftF32_radix2I(Out4, In4, L);
+	for(i = 0 ; i < L ; i++){//不需要从头到尾找最值 最值只可能出现在尾部500cm/332.3*10000=150.5个数据点
 		if(maxvalue[0] < Out2[i].real){
 			maxvalue[0] = Out2[i].real;
 			acorIndex[0] = i;//用于计算S2的下标

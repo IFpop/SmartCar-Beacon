@@ -153,20 +153,20 @@ void VoiceProcess(void)
 	float M2sub = 0.0;
 	float seta = 0.0;
 	
-	if(AdcFinishFlag)	{
-		/* 数据处理    */
-		Normal((int16_t *)g_adc0Data[AdcBuffIndex], ADC_DATA_LEN);
-		Normal((int16_t *)g_adc1Data[AdcBuffIndex], ADC_DATA_LEN);
-		Normal((int16_t *)g_adc2Data[AdcBuffIndex], ADC_DATA_LEN);
-		Normal((int16_t *)g_adc3Data[AdcBuffIndex], ADC_DATA_LEN);
-		for(int i = 0; i < ADC_DATA_LEN; i ++)
-		{
-         /* 上报匿名上位机  看原始数据波形 */
-			ANO_DT_send_int16(g_adc0Data[AdcBuffIndex][i], g_adc1Data[AdcBuffIndex][i], g_adc3Data[AdcBuffIndex][i], g_adc2Data[AdcBuffIndex][i], 0, 0, 0,0);
-		}
-		LED_Ctrl(LEDALL,RVS);
-		AdcFinishFlag = 0;
-}
+// 	if(AdcFinishFlag)	{
+// 		/* 数据处理    */
+// 		Normal((int16_t *)g_adc0Data[AdcBuffIndex], ADC_DATA_LEN);
+// 		Normal((int16_t *)g_adc1Data[AdcBuffIndex], ADC_DATA_LEN);
+// 		Normal((int16_t *)g_adc2Data[AdcBuffIndex], ADC_DATA_LEN);
+// 		Normal((int16_t *)g_adc3Data[AdcBuffIndex], ADC_DATA_LEN);
+// 		for(int i = 0; i < ADC_DATA_LEN; i ++)
+// 		{
+//         /* 上报匿名上位机  看原始数据波形 */
+// 			ANO_DT_send_int16(g_adc0Data[AdcBuffIndex][i], g_adc1Data[AdcBuffIndex][i], g_adc3Data[AdcBuffIndex][i], g_adc2Data[AdcBuffIndex][i], 0, 0, 0,0);
+// 		}
+// 		LED_Ctrl(LEDALL,RVS);
+// 		AdcFinishFlag = 0;
+// }
 
 	success_f = 1;  //默认是计算成功
 	if(AdcFinishFlag)
@@ -187,9 +187,9 @@ void VoiceProcess(void)
 //		S2 = (4096-acorIndex[0])*346*0.01;//单位cm
 //		S1 = (4096-acorIndex[1])*346*0.01;
 //		S_sub = (4096-acorIndex[2])*346*0.01;
-		S2 = (2048-acorIndex[0])*346*0.01;//单位cm
-		S1 = (2048-acorIndex[1])*346*0.01;
-		S_sub = (2048-acorIndex[2])*346*0.01;
+		S2 = (1024-acorIndex[0])*346*0.01;//单位cm
+		S1 = (1024-acorIndex[1])*346*0.01;
+		S_sub = (1024-acorIndex[2])*346*0.01;
 
 
 
