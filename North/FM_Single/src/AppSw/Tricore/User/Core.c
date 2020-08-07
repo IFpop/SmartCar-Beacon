@@ -10,14 +10,14 @@
 #include <LQ_FFT.h>
 
 //Èí¼þfft
-__attribute__ ((aligned(256))) cfloat32 Out1[4096];
-__attribute__ ((aligned(256))) cfloat32 Out2[4096];
-__attribute__ ((aligned(256))) cfloat32 Out3[4096];
-__attribute__ ((aligned(256))) cfloat32 Out4[4096];
-__attribute__ ((aligned(256))) cfloat32 In1[4096];
-__attribute__ ((aligned(256))) cfloat32 In2[4096];
-__attribute__ ((aligned(256))) cfloat32 In3[4096];
-__attribute__ ((aligned(256))) cfloat32 In4[4096];
+__attribute__ ((aligned(256))) cfloat32 Out1[2048];
+__attribute__ ((aligned(256))) cfloat32 Out2[2048];
+__attribute__ ((aligned(256))) cfloat32 Out3[2048];
+__attribute__ ((aligned(256))) cfloat32 Out4[2048];
+__attribute__ ((aligned(256))) cfloat32 In1[2048];
+__attribute__ ((aligned(256))) cfloat32 In2[2048];
+__attribute__ ((aligned(256))) cfloat32 In3[2048];
+__attribute__ ((aligned(256))) cfloat32 In4[2048];
 
 
 void prodatsfft(int16_t* acorIndex,int16_t * Data1, int16_t * Data2,int16_t * Data3,int16_t * Data4, uint16_t L){
