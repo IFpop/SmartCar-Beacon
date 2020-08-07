@@ -10,14 +10,6 @@
 #include <LQ_FFT.h>
 
 //软件fft
-//__attribute__ ((aligned(256))) cfloat32 Out1[4096];
-//__attribute__ ((aligned(256))) cfloat32 Out2[4096];
-//__attribute__ ((aligned(256))) cfloat32 Out3[4096];
-//__attribute__ ((aligned(256))) cfloat32 Out4[4096];
-//__attribute__ ((aligned(256))) cfloat32 In1[4096];
-//__attribute__ ((aligned(256))) cfloat32 In2[4096];
-//__attribute__ ((aligned(256))) cfloat32 In3[4096];
-//__attribute__ ((aligned(256))) cfloat32 In4[4096];
 __attribute__ ((aligned(256))) cfloat32 Out1[1024];
 __attribute__ ((aligned(256))) cfloat32 Out2[2048];
 __attribute__ ((aligned(256))) cfloat32 Out3[2048];
@@ -45,10 +37,6 @@ void prodatsfft(int16_t* acorIndex,int16_t * Data1, int16_t * Data2,int16_t * Da
 		In4[i].imag = 0;
 	}
 
-//	Ifx_FftF32_radix2(Out1, In1, nL);
-//	Ifx_FftF32_radix2(Out2, In2, nL);
-//	Ifx_FftF32_radix2(Out3, In3, nL);
-//	Ifx_FftF32_radix2(Out4, In4, nL);
 	Ifx_FftF32_radix2(Out1, In1, L);
 	Ifx_FftF32_radix2(Out2, In2, L);
 	Ifx_FftF32_radix2(Out3, In3, L);
@@ -68,79 +56,8 @@ void prodatsfft(int16_t* acorIndex,int16_t * Data1, int16_t * Data2,int16_t * Da
 		In4[i].real = Out1[i].real*Out4[i].real-Out1[i].imag*Out4[i].imag;
 		In4[i].imag = Out1[i].imag*Out4[i].real+Out1[i].real*Out4[i].imag;
 
-		//gcc-phat
-//		abs_H = sqrtf(In2[i].real*In2[i].real+In2[i].imag*In2[i].imag);
-//		In2[i].real = In2[i].real/abs_H;
-//		In2[i].imag = In2[i].imag/abs_H;
-//		abs_H = sqrtf(In3[i].real*In3[i].real+In3[i].imag*In3[i].imag);
-//		In3[i].real = In3[i].real/abs_H;
-//		In3[i].imag = In3[i].imag/abs_H;
-//		abs_H = sqrtf(In4[i].real*In4[i].real+In4[i].imag*In4[i].imag);
-//		In4[i].real = In4[i].real/abs_H;
-//		In4[i].imag = In4[i].imag/abs_H;
 	}
 
-//	uint16_t New_length = L*2;
-//	j = 0;
-//	for(i = 0 ; i < New_length ; i++){
-//		if(i < L/2){
-//			In1[i] = In2[j++];
-//		}
-//		else if(New_length - i < L/2){//后部分赋值
-//			if(j >= L){
-//				In1[i].imag = 0;
-//				In1[i].real = 0;
-//			}
-//			else
-//				In1[i] = In2[j++];
-//		}
-//		else{
-//			In1[i].imag = 0;
-//			In1[i].real = 0;
-//		}
-//	}
-//	Ifx_FftF32_radix2I(Out2, In1, New_length);
-//
-//
-//	j = 0;
-//	for(i = 0 ; i < New_length ; i++){
-//		if(i < L){
-//			In1[i] = In3[j++];
-//		}
-//		else if(New_length - i < L){//后部分赋值
-//			if(j >= L){
-//				In1[i].imag = 0;
-//				In1[i].real = 0;
-//			}
-//			else
-//				In1[i] = In3[j++];
-//		}
-//		else{
-//			In1[i].imag = 0;
-//			In1[i].real = 0;
-//		}
-//	}
-//	Ifx_FftF32_radix2I(Out3, In1, New_length);
-//
-//	j = 0;
-//	for(i = 0 ; i < New_length ; i++){
-//		if(i < L){
-//			In1[i] = In4[j++];
-//		}
-//		else if(New_length - i < L){//后部分赋值
-//			if(j >= L){
-//				In1[i].imag = 0;
-//				In1[i].real = 0;
-//			}
-//			else
-//				In1[i] = In4[j++];
-//		}
-//		else{
-//			In1[i].imag = 0;
-//			In1[i].real = 0;
-//		}
-//	}
-	// Ifx_FftF32_radix2I(Out3, In1, New_length);
 
 	Ifx_FftF32_radix2I(Out2, In2, L);
 	Ifx_FftF32_radix2I(Out3, In3, L);
