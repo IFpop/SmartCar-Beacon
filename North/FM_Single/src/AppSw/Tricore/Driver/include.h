@@ -32,8 +32,8 @@ QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 #define Bluetooth_RX UART1_RX_P02_3
 #define Bluetooth_TX UART1_TX_P02_2
 //------------cam----------------------
-#define Cam_RX UART2_RX_P02_1
-#define Cam_TX UART2_TX_P02_0
+#define Cam_RX UART2_RX_P33_8
+#define Cam_TX UART2_TX_P33_9
 //-----------motor---------------------
 #define Motor1_port1 P00_3
 #define Motor1_port2 P00_4

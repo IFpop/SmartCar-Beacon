@@ -15,14 +15,14 @@ void init_motor(void){
 	// 蓝牙初始化
 	UART_InitConfig(Bluetooth_RX,Bluetooth_TX, 38400);
 	// 摄像头通信
-//	UART_InitConfig(Cam_RX,Cam_TX, 9600);
+	UART_InitConfig(Cam_RX,Cam_TX, 9600);
 
 	//电机初始化
 	ATOM_PWM_InitConfig(ATOMPWM0, 0, 12500);
 	ATOM_PWM_InitConfig(ATOMPWM1, 0, 12500);
 	ATOM_PWM_InitConfig(ATOMPWM2, 0, 12500);
 	ATOM_PWM_InitConfig(ATOMPWM3, 0, 12500);
-
+//
 	//电机初始化 1 0反转 0 1正转
 	PIN_InitConfig(Motor1_port1, PIN_MODE_OUTPUT, 0);//1号电机
 	PIN_InitConfig(Motor1_port2, PIN_MODE_OUTPUT, 1);
@@ -51,17 +51,17 @@ void Init_RDA5807(void){
 
 	//显示芯片ID 0x5804
 	RXFreq = RDA5807_ReadReg(RDA_R00);
-	sprintf(txt,"Chip:0x%04X",RXFreq);
-	TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//字符串显示
+	// sprintf(txt,"Chip:0x%04X",RXFreq);
+	// TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//字符串显示
 
 	RSSI=RDA5807_GetRssi();//显示信号强度0~127
-	sprintf(txt,"RSSI:%02d  ",RSSI);
-	TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//字符串显示
+	// sprintf(txt,"RSSI:%02d  ",RSSI);
+	// TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//字符串显示
 
 	//设置收听频率 95.00
 	RXFreq=9500;
 	RDA5807_Reset();  //软件复位
 	RDA5807_SetFreq(RXFreq);
-	sprintf(txt,"Freq:%d.%02dMHz ",RXFreq/100,RXFreq%100);
-	TFTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//字符串显示
+	// sprintf(txt,"Freq:%d.%02dMHz ",RXFreq/100,RXFreq%100);
+	// TFTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//字符串显示
 }

@@ -55,7 +55,7 @@ void prodatsfft(int16_t* acorIndex,int16_t * Data1, int16_t * Data2,int16_t * Da
 	Ifx_FftF32_radix2(Out3, In3, L);
 	Ifx_FftF32_radix2(Out4, In4, L);
 	//º∆À„
-	for(i = 0 ; i < nL ; i++){
+	for(i = 0 ; i < L ; i++){
 	// for(i = 0 ; i < L ; i++){
 		Out2[i].imag = -Out2[i].imag;
 		In2[i].real = Out1[i].real*Out2[i].real-Out1[i].imag*Out2[i].imag;

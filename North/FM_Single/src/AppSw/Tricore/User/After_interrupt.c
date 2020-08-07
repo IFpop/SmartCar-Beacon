@@ -1,7 +1,7 @@
 /*
  * Interrupt_handle.c
  *
- *  Created on: 2020閿熸枻鎷�7閿熸枻鎷�3閿熸枻鎷�
+ *  Created on: 2020
  *      Author: IFpop
  */
 #include "include.h"
@@ -64,3 +64,36 @@ void After_Receive_Cam(uint8_t* buffer){
 		}
 	}
 }
+
+void After_Jy_Receive_Angle(uint8_t* buffer){
+	static int16_t V_Angle[3];
+	V_Angle[0] = ((short)(buffer[1]<<8| buffer[0]))/32768.0*180;
+	V_Angle[1] = ((short)(buffer[3]<<8| buffer[2]))/32768.0*180;
+	V_Angle[2] = ((short)(buffer[5]<<8| buffer[4]))/32768.0*180;
+
+//	sprintf(txt,"angle");
+//	TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//字符串显示
+//	sprintf(txt,"x_1:%d",V_Angle[0]);
+//	TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//字符串显示
+//	sprintf(txt,"y_1:%d",V_Angle[1]);
+//	TFTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//字符串显示
+//	sprintf(txt,"z_1:%d",V_Angle[2]);
+//	TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//字符串显示
+
+	ANO_DT_send_int16(V_Angle[0], V_Angle[1], V_Angle[2], 0, 0, 0, 0,0);
+}
+void After_Jy_Receive_a(uint8_t* buffer){
+	static int16_t V_a[3];
+	V_a[0] = ((short)(buffer[1]<<8| buffer[0]))/32768.0*16;
+	V_a[1] = ((short)(buffer[3]<<8| buffer[2]))/32768.0*16;
+	V_a[2] = ((short)(buffer[5]<<8| buffer[4]))/32768.0*16;
+}
+void After_Jy_Receive_w(uint8_t* buffer){
+	static int16_t V_w[3];
+	V_w[0] = ((short)(buffer[1]<<8| buffer[0]))/32768.0*2000;
+	V_w[1] = ((short)(buffer[3]<<8| buffer[2]))/32768.0*2000;
+	V_w[2] = ((short)(buffer[5]<<8| buffer[4]))/32768.0*2000;
+
+	ANO_DT_send_int16(V_w[0], V_w[1], V_w[2], 0, 0, 0, 0,0);
+}
+

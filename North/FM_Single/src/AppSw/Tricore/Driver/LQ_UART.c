@@ -115,7 +115,7 @@ void UART1_RX_IRQHandler(void)
 		if (receive_start_flag == 1)
 		{
 			receive_start_flag = 0;
-			After_bluetoothIRQ(control_type, buffer); //接收之后的处理
+//			After_bluetoothIRQ(control_type, buffer); //接收之后的处理
 		}
 	}
 	else
@@ -142,35 +142,37 @@ void UART1_ER_IRQHandler(void)
 void UART2_RX_IRQHandler(void)
 {
 	IfxAsclin_Asc_isrReceive(&g_UartConfig[2]);
-
 	/* 用户代码 */
-	static uint8_t buffer2[32]; //记录信息
-	static uint8_t control_type = 0;  //记录模式类型
-	static int receive_start_flag = 0; //标记一次传送是否完成
-	static uint8_t *ptr = 0;
+	static uint8_t buffer2[11]; //记录信息
+	static uint8_t count = 0;  //计数
+	// 记录数据
+	uint8_t ucStr[6]; 
 
 	//从通道中获取一个字节
-	uint8_t  data = UART_GetChar(UART2);
-	if (data == 's')
-	{
-		ptr = buffer2;
-		control_type = data;
-		receive_start_flag = 1;
+	buffer2[count] = UART_GetChar(UART2);
+	if(count == 0 && buffer2[0] != 0x55){
+		return;
 	}
-	else if (data == '\n')
-	{
-		*ptr = '\0';
-		ptr = buffer2;
-		if (receive_start_flag == 1)
-		{
-			receive_start_flag = 0;
-//			After_Receive_Cam(buffer2);
+	count++;
+	if(count == 11){
+		count = 0;
+		ucStr[0]=buffer2[2];
+		ucStr[1]=buffer2[3];
+		ucStr[2]=buffer2[4];
+		ucStr[3]=buffer2[5];
+		ucStr[4]=buffer2[6];
+		ucStr[5]=buffer2[7];
+		switch(buffer2[1]){
+			case 0x51:
+//				After_Jy_Receive_a(ucStr);
+				break;
+			case 0x52:
+				After_Jy_Receive_w((uint8_t*)ucStr);
+			    break;
+			case 0x53:
+//				After_Jy_Receive_Angle(ucStr);
+				break;
 		}
-	}
-	else
-	{
-		*ptr = data;
-		++ptr;
 	}
 }
 
