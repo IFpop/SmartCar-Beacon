@@ -74,8 +74,8 @@ int core0_main (void)
 
     while(1)//主循环
 	{
-		TOF10120();//遥控状态下 TOF10120运行一次约9ms
-    	delayms(20);
+		// TOF10120();//遥控状态下 TOF10120运行一次约9ms
+    	// delayms(20);
 //    	sprintf(txt,"x:%02f",vec.x);
 //    	TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//字符串显示
 //    	sprintf(txt,"y:%02f",vec.y);

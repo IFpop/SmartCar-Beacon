@@ -33,14 +33,13 @@ int core1_main (void)
     //等待CPU0 初始化完成
     while(!IfxCpu_acquireMutex(&mutexCpu0InitIsOk));
 
-    VoiceInit();
-//	Test_RDA5807();
-    Init_RDA5807();
+    // VoiceInit();
+    // Init_RDA5807();
 
     while(1)//主循环
     {
 //    	t1++;
-    	VoiceProcess();
+    	// VoiceProcess();
 
 //    	sprintf(txt,"t1:%d",t1);
 //    	TFTSPI_P8X16Str(1,7,txt,u16WHITE,u16BLACK);		//字符串显示

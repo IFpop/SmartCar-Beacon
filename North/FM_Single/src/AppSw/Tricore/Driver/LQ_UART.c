@@ -115,7 +115,7 @@ void UART1_RX_IRQHandler(void)
 		if (receive_start_flag == 1)
 		{
 			receive_start_flag = 0;
-//			After_bluetoothIRQ(control_type, buffer); //接收之后的处理
+			After_bluetoothIRQ(control_type, buffer); //接收之后的处理
 		}
 	}
 	else

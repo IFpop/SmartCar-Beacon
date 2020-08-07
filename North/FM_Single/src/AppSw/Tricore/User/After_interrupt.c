@@ -21,7 +21,7 @@ void After_bluetoothIRQ(uint8_t control_type, uint8_t* buffer){
     		vec.x = x;
     		vec.y = y;
     		vec.z = 0;
-    		if(x < 0){
+    		if(y < 0){
     			direct_flag = 1;
     		}
     		else{
