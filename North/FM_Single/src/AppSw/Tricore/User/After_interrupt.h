@@ -14,6 +14,10 @@
 #define Obstacle_Cam  600
 #define Cam_k 1.0
 
+// PD z 方向控制参数
+#define kp 1.05
+#define kd 0.2
+
 void After_bluetoothIRQ(uint8_t, uint8_t*);
 void After_Receive_Cam(uint8_t*);
 void After_Jy_Receive_Angle(uint8_t*);

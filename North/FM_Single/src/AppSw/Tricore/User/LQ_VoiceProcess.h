@@ -23,7 +23,7 @@
 // #define ADC_DATA_LEN    1024
 
 #define ChangeState 10  // 设置状态改变值
-#define obacle_length 20.5   // 避障距离
+#define obacle_length 22   // 避障距离
 
 void VoiceInit(void);
 

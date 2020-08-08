@@ -19,6 +19,7 @@ ASC异步串行通信，可以作为UART和汽车LIN总线使用，
 QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 
 
+#include "include.h"
 #include <LQ_UART.h>
 #include <LQ_GPIO.h>
 

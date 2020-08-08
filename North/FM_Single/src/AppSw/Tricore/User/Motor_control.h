@@ -9,18 +9,14 @@
 #define SRC_APPSW_TRICORE_USER_MOTOR_CONTROL_H_
 
 // PI 电机控制参数
-#define PID_P1 13
-#define PID_I1 3
-#define PID_P2 13
-#define PID_I2 3
-#define PID_P3 13
-#define PID_I3 3
-#define PID_P4 13
-#define PID_I4 3
-
-// PD z 方向控制参数
-#define kp 10
-#define kd 0
+#define PID_P1 23
+#define PID_I1 0.6
+#define PID_P2 23
+#define PID_I2 0.6
+#define PID_P3 23
+#define PID_I3 0.6
+#define PID_P4 23
+#define PID_I4 0.6
 
 
 // x,y,z 代表运动向量

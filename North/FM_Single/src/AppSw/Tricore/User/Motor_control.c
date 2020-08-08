@@ -63,72 +63,10 @@ void vector2speed(struct vector3f_t* vec, float speed){
 	for(int i = 0 ; i <  4 ; i++){
 		speed_vector[i] = speed_vector[i]*speed;
 
-		switch(i){
-		case 0:
-			if(speed_vector[i] < 0 ){
-				speed_vector[i] = -speed_vector[i];
-				PIN_Write(Motor1_port1, 1);
-				PIN_Write(Motor1_port2, 0);
-			}
-			else{
-				PIN_Write(Motor1_port1, 0);
-				PIN_Write(Motor1_port2, 1);
-			}
-			target1 = speed_vector[i];
-//			if(target1 != target1_last){
-//				sum_error[0] = 0;
-//			}
-			target1_last = target1;
-			break;
-		case 1:
-			if(speed_vector[i] < 0 ){
-				speed_vector[i] = -speed_vector[i];
-				PIN_Write(Motor2_port1, 1);
-				PIN_Write(Motor2_port2, 0);
-			}
-			else{
-				PIN_Write(Motor2_port1, 0);
-				PIN_Write(Motor2_port2, 1);
-			}
-			target2 = speed_vector[i];
-//			if(target2 != target2_last){
-//				sum_error[1] = 0;
-//			}
-			target2_last = target2;
-			break;
-		case 2:
-			if(speed_vector[i] < 0 ){
-				speed_vector[i] = -speed_vector[i];
-				PIN_Write(Motor3_port1, 1);
-				PIN_Write(Motor3_port2, 0);
-			}
-			else{
-				PIN_Write(Motor3_port1, 0);
-				PIN_Write(Motor3_port2, 1);
-			}
-			target3 = speed_vector[i];
-//			if(target3 != target3_last){
-//				sum_error[2] = 0;
-//			}
-			target3_last = target3;
-			break;
-		case 3:
-			if(speed_vector[i] < 0 ){
-				speed_vector[i] = -speed_vector[i];
-				PIN_Write(Motor4_port1, 1);
-				PIN_Write(Motor4_port2, 0);
-			}
-			else{
-				PIN_Write(Motor4_port1, 0);
-				PIN_Write(Motor4_port2, 1);
-			}
-			target4 = speed_vector[i];
-//			if(target4 != target4_last){
-//				sum_error[3] = 0;
-//			}
-			target4_last = target4;
-			break;
-		}
+		target1 = speed_vector[0];
+		target2 = speed_vector[1];
+		target3 = speed_vector[2];
+		target4 = speed_vector[3];
 	}
 //	ANO_DT_send_int16((int)(vec->x*100), (int)(vec->y*100), (int)(vec->z), speed ,0, 0, 0, 0);
 }
@@ -163,31 +101,34 @@ void speed_control(void){
 		times ++;
 		vec_.x = (vec.x + offset.x*k)*100;
 		vec_.y = (vec.y + offset.y*k)*100;
-		vec_.z = (vec.z + offset.z*k)/2;//offset.z =0
+		vec_.z = (vec.z + offset.z*k);//offset.z =0
 	}
 	else{
 		times = 0;
 		vec_.x = vec.x*100;
 		vec_.y = vec.y*100;
-		vec_.z = vec.z/2;
+		vec_.z = vec.z;
 	}
 
-	if(times == 5)//避障状态持续时间 times*50ms
+	if(times == 5)//避障状态持续时间 times*30ms
 	{
 		times = 0;
 		offset_flag = 0;
 	}
-	vector2speed(&vec_,1.285);
+
+
+	vector2speed(&vec_,2.5);
 
 	enc1 = ENC_GetCounter(ENCODE1_INPUT);//1号电机
 	enc2 = ENC_GetCounter(ENCODE2_INPUT);//2号电机
 	enc3 = ENC_GetCounter(ENCODE3_INPUT);//3号电机
 	enc4 = ENC_GetCounter(ENCODE4_INPUT);//4号电机
 
-	enc1=enc1*(enc1>0)-enc1*(enc1<0);//取绝对值
-	enc2=enc2*(enc2>0)-enc2*(enc2<0);//取绝对值
-	enc3=enc3*(enc3>0)-enc3*(enc3<0);//取绝对值
-	enc4=enc4*(enc4>0)-enc4*(enc4<0);//取绝对值
+	// 编码器正负与电机转向一致
+	enc1 = -enc1;
+	enc2 = +enc2;
+	enc3 = +enc3;
+	enc4 = -enc4;
 
 	int16_t motor1_pluse = motor_pid(enc1,target1,PID_P1,PID_I1,(int16_t*)&sum_error,0);
 	int16_t motor2_pluse = motor_pid(enc2,target2,PID_P2,PID_I2,(int16_t*)&sum_error,1);
@@ -197,22 +138,66 @@ void speed_control(void){
 	// 限幅
 	/* 限幅  防止电机转速反差过大  */
 	static float motor1Last = 0, motor2Last = 0, motor3Last = 0, motor4Last = 0;
-	motor1_pluse = motor1Last + constrain_float(motor1_pluse - motor1Last, -1000, 1000);
-	motor2_pluse = motor2Last + constrain_float(motor2_pluse - motor2Last, -1000, 1000);
-	motor3_pluse = motor3Last + constrain_float(motor3_pluse - motor3Last, -1000, 1000);
-	motor4_pluse = motor4Last + constrain_float(motor4_pluse - motor4Last, -1000, 1000);
+	motor1_pluse = motor1Last + constrain_float(motor1_pluse - motor1Last, -4000, 4000);
+	motor2_pluse = motor2Last + constrain_float(motor2_pluse - motor2Last, -4000, 4000);
+	motor3_pluse = motor3Last + constrain_float(motor3_pluse - motor3Last, -4000, 4000);
+	motor4_pluse = motor4Last + constrain_float(motor4_pluse - motor4Last, -4000, 4000);
 
-	ATOM_PWM_SetDuty(ATOMPWM0, motor1_pluse, 12500);
-	ATOM_PWM_SetDuty(ATOMPWM1, motor2_pluse, 12500);
-	ATOM_PWM_SetDuty(ATOMPWM2, motor3_pluse, 12500);
-	ATOM_PWM_SetDuty(ATOMPWM3, motor4_pluse, 12500);
+	motor1_pluse = constrain_float(motor1_pluse,-8000,8000);
+	motor2_pluse = constrain_float(motor2_pluse,-8000,8000);
+	motor3_pluse = constrain_float(motor3_pluse,-8000,8000);
+	motor4_pluse = constrain_float(motor4_pluse,-8000,8000);
+
+	if(motor1_pluse > 0){
+		PIN_Write(Motor1_port1, 0);
+		PIN_Write(Motor1_port2, 1);
+		ATOM_PWM_SetDuty(ATOMPWM0, motor1_pluse, 12500);
+	}
+	else{
+		PIN_Write(Motor1_port1, 1);
+		PIN_Write(Motor1_port2, 0);
+		ATOM_PWM_SetDuty(ATOMPWM0, -motor1_pluse, 12500);
+	}
+
+	if(motor2_pluse > 0){
+		PIN_Write(Motor2_port1, 0);
+		PIN_Write(Motor2_port2, 1);
+		ATOM_PWM_SetDuty(ATOMPWM1, motor2_pluse, 12500);
+	}
+	else{
+		PIN_Write(Motor2_port1, 1);
+		PIN_Write(Motor2_port2, 0);
+		ATOM_PWM_SetDuty(ATOMPWM1, -motor2_pluse, 12500);
+	}
+
+	if(motor3_pluse > 0){
+		PIN_Write(Motor3_port1, 0);
+		PIN_Write(Motor3_port2, 1);
+		ATOM_PWM_SetDuty(ATOMPWM2, motor3_pluse, 12500);
+	}
+	else{
+		PIN_Write(Motor3_port1, 1);
+		PIN_Write(Motor3_port2, 0);
+		ATOM_PWM_SetDuty(ATOMPWM2, -motor3_pluse, 12500);
+	}
+
+	if(motor4_pluse > 0){
+		PIN_Write(Motor4_port1, 0);
+		PIN_Write(Motor4_port2, 1);
+		ATOM_PWM_SetDuty(ATOMPWM3, motor4_pluse, 12500);
+	}
+	else{
+		PIN_Write(Motor4_port1, 1);
+		PIN_Write(Motor4_port2, 0);
+		ATOM_PWM_SetDuty(ATOMPWM3, -motor4_pluse, 12500);
+	}
 
 	motor1Last = motor1_pluse;
 	motor2Last = motor2_pluse;
 	motor3Last = motor3_pluse;
 	motor4Last = motor4_pluse;
 
-//	ANO_DT_send_int16(motor1_pluse, motor2_pluse, motor1Last,motor2Last, enc1, enc2, enc3, (int)(vec_.y*1.2));
+//	ANO_DT_send_int16(enc1, enc2, enc3, enc4, target1, motor1_pluse, 0, 0);
 }
 
 int16_t motor_pid(int16_t pulse, int16_t target_pulse,float P,float I,int16_t* sum_err,int8_t index){
@@ -222,51 +207,44 @@ int16_t motor_pid(int16_t pulse, int16_t target_pulse,float P,float I,int16_t* s
 	sum_err[index] += error;
 	PI_SUM =I * sum_err[index];
 
-	// 限幅  --> need change
-    if(PI_SUM>8000)
-         PI_SUM=8000;
+	PI_SUM = constrain_float(PI_SUM,-8000,8000);
 
     float result = 0;
     result = P * error + PI_SUM;//pid计算结果result
 
-//    ANO_DT_send_int16(result, error, sum_err[0], pulse,target_pulse,0,0,0);
-
-    if (result > 8000)//输出限幅
-           result = 8000;
-    if (result < 0)
-           result = 0;
+//    ANO_DT_send_int16(pulse, target_pulse, error, sum_err[index], result, 0, 0, 0);
     return result;
 }
 
 void Servo_PD(void){
-	int16_t S[4];
-
-	int target_ = 90;
-
-	S[0] = -ENC_GetCounter(ENCODE1_INPUT);//1号电机
-	S[1] = +ENC_GetCounter(ENCODE2_INPUT);//2号电机
-	S[2] = +ENC_GetCounter(ENCODE3_INPUT);//3号电机
-	S[3] = -ENC_GetCounter(ENCODE4_INPUT);//4号电机
-
-	struct vector3f_t * vec_speed = speed2vector(S,1);
-
-	float w = vec_speed->z/35.06;  // 角速度
-
-	if(z_change_flag == 0){  // z没有发生改变
-		z_sum_error += w*0.05;
-	}
-	else{
-		z_sum_error = w*0.05;
-	}
-
-	float angle = 0;
-	PD_error = target_-z_sum_error;
-	angle = kp*PD_error+kd*(PD_error-PD_last_error);
-	PD_last_error = PD_error;
-	if(IfxCpu_acquireMutex(&mutevec)){
-		vec.z = angle;
-		IfxCpu_releaseMutex(&mutevec);
-	}
+//	int16_t S[4];
+//
+//	int target_ = 90;
+//
+//	S[0] = -ENC_GetCounter(ENCODE1_INPUT);//1号电机
+//	S[1] = +ENC_GetCounter(ENCODE2_INPUT);//2号电机
+//	S[2] = +ENC_GetCounter(ENCODE3_INPUT);//3号电机
+//	S[3] = -ENC_GetCounter(ENCODE4_INPUT);//4号电机
+//
+//	struct vector3f_t * vec_speed = speed2vector(S,1);
+//
+//	float w = vec_speed->z/35.06;  // 角速度
+//
+//	if(z_change_flag == 0){  // z没有发生改变
+//		z_sum_error += w*0.05;
+//	}
+//	else{
+//		z_sum_error = w*0.05;
+//	}
+//
+//	float angle = 0;
+//	PD_error = target_-z_sum_error;
+//	angle = kp*PD_error+kd*(PD_error-PD_last_error);
+//	PD_last_error = PD_error;
+//	if(IfxCpu_acquireMutex(&mutevec)){
+//		vec.z = angle;
+//		IfxCpu_releaseMutex(&mutevec);
+//	}
 //	ANO_DT_send_int16((int)PD_last_error, (int)PD_error, (int)target_, (int)vec_speed->z, (int)angle, (int)z_sum_error , (int)vec.z, 0);
 }
 

@@ -51,17 +51,17 @@ void Init_RDA5807(void){
 
 	//显示芯片ID 0x5804
 	RXFreq = RDA5807_ReadReg(RDA_R00);
-	// sprintf(txt,"Chip:0x%04X",RXFreq);
-	// TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//字符串显示
+	 sprintf(txt,"Chip:0x%04X",RXFreq);
+	 TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//字符串显示
 
 	RSSI=RDA5807_GetRssi();//显示信号强度0~127
-	// sprintf(txt,"RSSI:%02d  ",RSSI);
-	// TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//字符串显示
+	 sprintf(txt,"RSSI:%02d  ",RSSI);
+	 TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//字符串显示
 
 	//设置收听频率 95.00
 	RXFreq=9500;
 	RDA5807_Reset();  //软件复位
 	RDA5807_SetFreq(RXFreq);
-	// sprintf(txt,"Freq:%d.%02dMHz ",RXFreq/100,RXFreq%100);
-	// TFTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//字符串显示
+	 sprintf(txt,"Freq:%d.%02dMHz ",RXFreq/100,RXFreq%100);
+	 TFTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//字符串显示
 }

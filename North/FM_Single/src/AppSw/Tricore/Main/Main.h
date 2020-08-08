@@ -29,6 +29,7 @@ extern volatile uint8_t evadibleFlage;
 
 extern struct vector3f_t vec;
 extern struct vector3f_t offset;
+extern float w_target;
 
 extern uint32_t offset_flag;    // 避障标志位
 extern uint32_t z_change_flag;  // z改变标志位

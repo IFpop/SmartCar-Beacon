@@ -38,11 +38,7 @@ int core1_main (void)
 
     while(1)//Ö÷Ñ­»·
     {
-//    	t1++;
     	VoiceProcess();
-
-//    	sprintf(txt,"t1:%d",t1);
-//    	TFTSPI_P8X16Str(1,7,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
     }
 
 }

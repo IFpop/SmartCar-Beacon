@@ -12,6 +12,9 @@ float z = 0.0;
 static int32_t last_direct[3] = {0,0,0};
 static uint32_t length = 0;
 
+static float last_S = 0;
+static uint32_t stop_count = 0;
+
 /* 存放相关峰值下标 */
 int16_t acorIndex[3];
 /* 记录时间 */
@@ -48,9 +51,9 @@ __attribute__ ((aligned(256)))  volatile int16_t g_adc3Data[2][ADC_DATA_LEN];
   */
 void VoiceInit(void)
 {
-//	ADC_InitConfig(MIC1, 1000000); //初始化 1号麦克风
+	ADC_InitConfig(MIC1, 1000000); //初始化 1号麦克风
 	ADC_InitConfig(MIC2, 1000000); //初始化 2号麦克风
-	ADC_InitConfig(MIC3, 1000000); //初始化 3号麦克风
+//	ADC_InitConfig(MIC3, 1000000); //初始化 3号麦克风
 	ADC_InitConfig(MIC4, 1000000); //初始化 4号麦克风
 	ADC_InitConfig(RF, 1000000); //初始化 射频模块
 
@@ -85,9 +88,9 @@ void VoiceGetSample(void)
 	if(AdcFinishFlag == 0)
 	{
 		g_adc0Data[adcIndex][adcCount] = ADC_Read(RF);
-//		g_adc0Data[adcIndex][adcCount] = ADC_Read(MIC1);
 		g_adc1Data[adcIndex][adcCount] = ADC_Read(MIC2);
-		g_adc2Data[adcIndex][adcCount] = ADC_Read(MIC3);
+		g_adc2Data[adcIndex][adcCount] = ADC_Read(MIC1);
+//		g_adc2Data[adcIndex][adcCount] = ADC_Read(MIC3);
 		g_adc3Data[adcIndex][adcCount] = ADC_Read(MIC4);
 
 		adcCount++;
@@ -213,60 +216,78 @@ void VoiceProcess(void)
 				seta = 0.0;
 			}
 
-			if(success_f){
-				// 将指定目标定在灯的侧边
-				if(0 < seta && seta < 90){
-					seta += 180.0*obacle_length/(S*pi);
-				}
-				else{
-					seta -= 180.0*obacle_length/(S*pi);
-				}
+			float temp = (S - last_S)>0?S-last_S:last_S-S;
+			last_S = S;
+			if(temp < 6){
+				stop_count++;
+			}
+			else{
+				stop_count = 0;
+			}
 
-				x = cosf(seta*pi/180)*1.0;//cosf和sinf处理的是弧度
-				y = sinf(seta*pi/180)*1.0;
-				z = (seta-90)*1.0;
+			if(stop_count == 3){
+				vec.x = 2;
+				vec.y = 0;
+				vec.z = 0;
+			}
+			else{
+				stop_count = 0;
+				if(success_f){
+					// 将指定目标定在灯的侧边
+					if(0 < seta && seta < 90){
+						seta += 180.0*obacle_length/(S*pi);
+					}
+					else{
+						seta -= 180.0*obacle_length/(S*pi);
+					}
 
-				//判断灯在前还是在后
-				if(S > S_sub){//灯在车尾
-					direct_flag = -1;
-				}
-				else{
-					direct_flag = 1;
-				}
+					x = cosf(seta*pi/180)*1.0;//cosf和sinf处理的是弧度
+					y = sinf(seta*pi/180)*1.0;
+					z = (seta-90)*1.0;
 
-				if(S > 50 ){//距离大于50cm才会决策
-					last_direct[length++] = direct_flag;
-					if(length == 3){
+					//判断灯在前还是在后
+					if(S < S_sub){//灯在车尾
+						direct_flag = -1;
+					}
+					else{
+						direct_flag = 1;
+					}
+
+					if(S > 50 ){//距离大于50cm才会决策
+						last_direct[length++] = direct_flag;
+						if(length == 3){
+							length = 0;
+						}
+						direct_flag = Average(last_direct,3);
+						arrive_flag = 0;
+					}
+					else{// 否则清空状态
+						for(int i = 0 ; i < 3 ; i++){
+							last_direct[i] = direct_flag;
+						}
 						length = 0;
+						arrive_flag = 1 ;  //准备接近目标灯
 					}
-					direct_flag = Average(last_direct,3);
-					arrive_flag = 0;
-				}
-				else{// 否则清空状态
-					for(int i = 0 ; i < 3 ; i++){
-						last_direct[i] = direct_flag;
+
+					if(direct_flag == -1){
+						y = -y;
+						z = (90-seta)*1.0;
 					}
-					length = 0;
-					arrive_flag = 1 ;  //准备接近目标灯
-				}
 
-				if(direct_flag == -1){
-					y = -y;
-					z = (90-seta)*1.0;
+					if(IfxCpu_acquireMutex(&mutevec)){
+						vec.x = x;
+						vec.y = y;
+						w_target = z;
+						vec.z = z;
+						IfxCpu_releaseMutex(&mutevec);
+					}
+					 sprintf(txt,"S:%f",S);
+					 TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//字符串显示
+					 sprintf(txt,"seta:%4f",seta);
+					 TFTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//字符串显示
+					 sprintf(txt,"S_:%4f",S_sub);
+					 TFTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//字符串显示
 				}
-
-				if(IfxCpu_acquireMutex(&mutevec)){
-					vec.x = x;
-					vec.y = y;
-					vec.z = z;
-					IfxCpu_releaseMutex(&mutevec);
-				}
-				// sprintf(txt,"S2:%f",S);
-				// TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//字符串显示
-				// sprintf(txt,"seta:%4f",seta);
-				// TFTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//字符串显示
-				// sprintf(txt,"S_:%4f",S_sub);
-				// TFTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//字符串显示
 			}
 		}
 		z_change_flag = 0;
