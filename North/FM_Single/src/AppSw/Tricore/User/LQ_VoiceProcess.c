@@ -148,7 +148,6 @@ void VoiceProcess(void)
 	float S2 = 0.0;
 	float S_sub = 0.0;
 	float M2sum = 0.0;
-	float S = 0.0;
 	float Mid = 0.0;
 	float M2sub = 0.0;
 	float seta = 0.0;
@@ -169,9 +168,9 @@ void VoiceProcess(void)
 // }
 
 	success_f = 1;  //默认是计算成功
+	z_change_flag = 0;
 	if(AdcFinishFlag)
 	{
-		z_change_flag = 1;
 		/* 记录时间 */
 //		nowTime = STM_GetNowUs(STM0);
 
@@ -196,7 +195,7 @@ void VoiceProcess(void)
 		if(res < 0){
 			res = -res;
 		}
-		if(S1 <= 500 && S2 <= 500 && S_sub <= 500 && res <= 24){//res<=18  允许一定误差
+		if(S1 <= 550 && S2 <= 550 && S_sub <= 550 && res <= 24){//res<=18  允许一定误差
 			M2sum = S1*S1+S2*S2;
 			Mid = M2sum/2 - 81;
 			if(Mid >= 0){
@@ -218,7 +217,7 @@ void VoiceProcess(void)
 
 			float temp = (S - last_S)>0?S-last_S:last_S-S;
 			last_S = S;
-			if(temp < 6){
+			if(temp < 10){
 				stop_count++;
 			}
 			else{
@@ -233,12 +232,20 @@ void VoiceProcess(void)
 			else{
 				stop_count = 0;
 				if(success_f){
-					// 将指定目标定在灯的侧边
-					if(0 < seta && seta < 90){
-						seta += 180.0*obacle_length/(S*pi);
-					}
-					else{
-						seta -= 180.0*obacle_length/(S*pi);
+					if(S < 150){  // 进入这个范围，开始瞄准灯的旁边
+						// 将指定目标定在灯的侧边
+						if(0 < seta && seta < 90){
+							seta += 180.0*obacle_length/(S*pi);
+						}
+						else{
+							seta -= 180.0*obacle_length/(S*pi);
+						}
+						if(seta < 0){
+							seta = 0;
+						}
+						else if(seta > 180){
+							seta = 180;
+						}
 					}
 
 					x = cosf(seta*pi/180)*1.0;//cosf和sinf处理的是弧度
@@ -253,7 +260,7 @@ void VoiceProcess(void)
 						direct_flag = 1;
 					}
 
-					if(S > 40 ){//距离大于40cm才会决策
+					if(S > 60){//距离大于40cm才会决策
 						last_direct[length++] = direct_flag;
 						if(length == 3){
 							length = 0;
@@ -263,7 +270,7 @@ void VoiceProcess(void)
 					}
 					else{// 否则清空状态
 						for(int i = 0 ; i < 3 ; i++){
-							last_direct[i] = direct_flag;
+							last_direct[i] = 0;
 						}
 						length = 0;
 						arrive_flag = 1 ;  //准备接近目标灯
@@ -275,10 +282,12 @@ void VoiceProcess(void)
 					}
 
 					if(IfxCpu_acquireMutex(&mutevec)){
+						// 正常情况下为中速
 						vec.x = x;
 						vec.y = y;
 						w_target = z;
 						vec.z = z;
+						z_change_flag = 1;
 						IfxCpu_releaseMutex(&mutevec);
 					}
 					 sprintf(txt,"S:%f",S);
@@ -290,7 +299,7 @@ void VoiceProcess(void)
 				}
 			}
 		}
-		z_change_flag = 0;
+
 		LED_Ctrl(LEDALL,RVS);
 		AdcFinishFlag = 0;
 	}

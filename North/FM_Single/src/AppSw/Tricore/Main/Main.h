@@ -29,12 +29,16 @@ extern volatile uint8_t evadibleFlage;
 
 extern struct vector3f_t vec;
 extern struct vector3f_t offset;
+
 extern float w_target;
+extern float S;
 
 extern uint32_t offset_flag;    // 避障标志位
 extern uint32_t z_change_flag;  // z改变标志位
 extern uint32_t direct_flag;    //默认在前方 0-前方  1-后方
 extern uint32_t arrive_flag;    // 1 表示达到灭灯距离
+
+extern uint32_t dd;
 
 extern char txt[50];
 

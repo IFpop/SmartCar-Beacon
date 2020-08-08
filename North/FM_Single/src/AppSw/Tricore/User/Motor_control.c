@@ -7,7 +7,7 @@
 
 #include "include.h"
 
-static float k = 1.4;
+static float k = 1.2;
 static uint32_t times = 0;
 static struct vector3f_t vec_ = {0.0f,0.0f,0.0f};
 
@@ -28,9 +28,9 @@ volatile 	int16_t enc2  = 0;
 volatile	int16_t enc3  = 0;
 volatile	int16_t enc4  = 0;
 
-static float PD_error = 0.0;
-static float PD_last_error = 0.0;
-static float z_sum_error = 0;
+//static float PD_error = 0.0;
+//static float PD_last_error = 0.0;
+//static float z_sum_error = 0;
 
 // 限制幅值函数，指定值范围应该在low~high之间
 float constrain_float(float amt, float low, float high)
@@ -110,12 +110,21 @@ void speed_control(void){
 		vec_.z = vec.z;
 	}
 
-	if(times == 5)//避障状态持续时间 times*30ms
+	if(times == 3)//避障状态持续时间 times*30ms
 	{
 		times = 0;
 		offset_flag = 0;
 	}
 
+	// 设置速度分段
+	if(0 < S && S < 50){ //低速
+		vec_.x *= 0.8;
+		vec_.y *= 0.8;
+	}
+	else if(S > 350){ // 高速
+		vec_.x *= 1.25;
+		vec_.y *= 1.25;
+	}
 
 	vector2speed(&vec_,2.5);
 
@@ -138,16 +147,20 @@ void speed_control(void){
 	// 限幅
 	/* 限幅  防止电机转速反差过大  */
 	static float motor1Last = 0, motor2Last = 0, motor3Last = 0, motor4Last = 0;
-	motor1_pluse = motor1Last + constrain_float(motor1_pluse - motor1Last, -4000, 4000);
-	motor2_pluse = motor2Last + constrain_float(motor2_pluse - motor2Last, -4000, 4000);
-	motor3_pluse = motor3Last + constrain_float(motor3_pluse - motor3Last, -4000, 4000);
-	motor4_pluse = motor4Last + constrain_float(motor4_pluse - motor4Last, -4000, 4000);
+//	motor1_pluse = motor1Last + constrain_float(motor1_pluse - motor1Last, -4000, 4000);
+//	motor2_pluse = motor2Last + constrain_float(motor2_pluse - motor2Last, -4000, 4000);
+//	motor3_pluse = motor3Last + constrain_float(motor3_pluse - motor3Last, -4000, 4000);
+//	motor4_pluse = motor4Last + constrain_float(motor4_pluse - motor4Last, -4000, 4000);
 
 	motor1_pluse = constrain_float(motor1_pluse,-8000,8000);
 	motor2_pluse = constrain_float(motor2_pluse,-8000,8000);
 	motor3_pluse = constrain_float(motor3_pluse,-8000,8000);
 	motor4_pluse = constrain_float(motor4_pluse,-8000,8000);
 
+//	motor1Last = motor1_pluse;
+//	motor2Last = motor2_pluse;
+//	motor3Last = motor3_pluse;
+//	motor4Last = motor4_pluse;
 	if(motor1_pluse > 0){
 		PIN_Write(Motor1_port1, 0);
 		PIN_Write(Motor1_port2, 1);
@@ -191,11 +204,6 @@ void speed_control(void){
 		PIN_Write(Motor4_port2, 0);
 		ATOM_PWM_SetDuty(ATOMPWM3, -motor4_pluse, 12500);
 	}
-
-	motor1Last = motor1_pluse;
-	motor2Last = motor2_pluse;
-	motor3Last = motor3_pluse;
-	motor4Last = motor4_pluse;
 
 //	ANO_DT_send_int16(enc1, enc2, enc3, enc4, target1, motor1_pluse, 0, 0);
 }
