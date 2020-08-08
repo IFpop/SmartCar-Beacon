@@ -7,20 +7,20 @@
 
 #include "include.h"
 
-
+Event_kalman X;
 float32 Kalman_Filters(float32* Z){
 
-	float x = X->x;                         //获得传感器测到的x,y,z,Seta,w五个参数
-	float y = X->y;
-	float v = X->v;
-	float Seta = X->Seta;                   //角度，而非弧度
-	float w = X->Seta;
+	float x = X.x;                         //获得传感器测到的x,y,z,Seta,w五个参数
+	float y = X.y;
+	float v = X.v;
+	float Seta = X.Seta;                   //角度，而非弧度
+	float w = X.Seta;
 
-	float x_p 	 = X_update_last[0][0];     //Ja雅克比矩阵是在上一次预测值处线性化，所以取值为上一次修正后预测值
-	float y_p 	 = X_update_last[1][0];
-	float v_p 	 = X_update_last[2][0];
-	float Seta_p = X_update_last[3][0];
-	float w_p 	 = X_update_last[4][0];
+	float x_p 	 = X_update_last[0];     //Ja雅克比矩阵是在上一次预测值处线性化，所以取值为上一次修正后预测值
+	float y_p 	 = X_update_last[1];
+	float v_p 	 = X_update_last[2];
+	float Seta_p = X_update_last[3];
+	float w_p 	 = X_update_last[4];
 
 	/*******************计算各自协方差矩阵↓******************/
 
@@ -55,7 +55,7 @@ float32 Kalman_Filters(float32* Z){
 	if(w_p<1 && w_p>-1){
 
 		Ja[0][0] = 1; 	J[0][2] = dt*cos(Seta_p);   J[0][3] = -dt*v_p*sin(Seta_p);       //Ja计算
-		Ja[1][1] = 1;   J[1][2] = dt*sin(Seta_p);   J[0][3] = dt*v_p*cos(Seta_p);
+		Ja[1][1] = 1;   J[1][2] = dt*sin(Seta_p);   J[1][3] = dt*v_p*cos(Seta_p);
 		Ja[2][2] = 1;
 		Ja[3][3] = 1;   Ja[3][4] = dt;
 		Ja[4][4] = 1;
@@ -101,11 +101,11 @@ float32 Kalman_Filters(float32* Z){
 
 	/********************各自协方差计算结束↑*********************/
 
-	X_predict[0][0] = State[0][0];        //获得当前预测值
-	X_predict[1][0] = State[1][0];
-	X_predict[2][0] = State[2][0];
-	X_predict[3][0] = State[3][0];
-	X_predict[4][0] = State[4][0];
+	X_predict[0] = State[0][0];        //获得当前预测值
+	X_predict[1] = State[1][0];
+	X_predict[2] = State[2][0];
+	X_predict[3] = State[3][0];
+	X_predict[4] = State[4][0];
 
 	// 获得观测值 Z                            由于Hl矩阵为对角矩阵，所以简化计算
 	Z[0][0] = Hl[0][0] * Z[0][0];
@@ -116,9 +116,9 @@ float32 Kalman_Filters(float32* Z){
 
 	// 计算当前协方差P_predict
 
-	float32 tem1[5][5] = {0};
-	float32 tem2[5][5] = {0};
-	float32 tem3[5][5] = {0};
+	float32 tem1[5][5] = {{0}};
+	float32 tem2[5][5] = {{0}};
+	float32 tem3[5][5] = {{0}};
 	Dot(Ja, P_update_last, tem1, 5,5,5,5);	//计算Ja * P_update_last，结果存在tem1
 	Transpose(Ja, tem2 ,5,5);           //转置Ja，  结果存在tem2
 	Dot(tem1, tem2, tem3, 5,5,5,5);    		//计算Ja * P_update_last * Ja.T，结果存在tem3
@@ -127,16 +127,16 @@ float32 Kalman_Filters(float32* Z){
 	//P_predict = Ja * P_update_last * Ja.T + Q  # 预测 P
 
 	//计算卡尔曼增益K
-	float32 tem4[5][5] = {0};
-	float32 tem5[5][5] = {0};
-	float32 tem6[5][5] = {0};
-	float32 S[5][5]    = {0};
+	float32 tem4[5][5] = {{0}};
+	float32 tem5[5][5] = {{0}};
+	float32 tem6[5][5] = {{0}};
+	float32 S[5][5]    = {{0}};
 	Dot(Hl, P_predict, tem4, 5,5,5,5);       //计算Hl * P_predict   结果存在tem4
 	Transpose(Hl, tem5  ,5,5);           //转置Hl，  结果存在tem5
 	Dot(tem4, tem5, tem6 ,5, 5,5,5);         //计算Hl * P_predict* Hl.T， 结果存在tem6
 	Mat_Plus(tem6, R, S,5,5);			 //计算S = Hl * P_predict* Hl.T + R， 结果存在S
 
-	float32 tem7[5][5] = {0};
+	float32 tem7[5][5] = {{0}};
 	Dot(P_predict, tem5,tem7,5,5,5,5);       //计算P_predict * Hl.T，结果存在tem7
 	Diag_Inverse(S, S);                  //计算S逆，存在S
 	Dot(tem7, S, K, 5,5, 5);                //计算(P_predict * Hl.T) * np.linalg.inv(S)，结果存于K
@@ -145,9 +145,9 @@ float32 Kalman_Filters(float32* Z){
 	//K = (P_predict * Hl.T) * np.linalg.inv(S)
 
 	//更新X_update
-	float32 Y[5][1] = 	 {0};
+	float32 Y[5] = 	 {0};
 	float32 tem8[5][5] = {0};
-	float32 tem9[5][1]    = {0};
+	float32 tem9[5]    = {0};
 	Dot(Hl,X_predict, tem8, 5,5, 5,1);      //计算Hl* X_predict[:, i]， 存于tem8
 	Mat_Sub(Z, tem8, Y,5,1);			    //计算Z[:,i+1] - Hl* X_predict[:, i]，存于Y
 

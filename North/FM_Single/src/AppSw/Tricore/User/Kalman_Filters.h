@@ -8,6 +8,14 @@
 #ifndef KALMAN_FILTERS_H_
 #define KALMAN_FILTERS_H_
 
+struct Kalman{
+	float x;                 
+	float y;
+	float v;
+	float Seta;      //角度，而非弧度
+	float w;    // 角速度
+}Event_kalman;
+
 
 #define noise_a   2.0		 //process noise standard deviation for a
 #define noise_yaw 0.3    	 //process noise standard deviation for yaw acceleration
@@ -25,15 +33,15 @@ static float32 P_predict_last[5][5] = {{0}};		   //上一次 X状态的协方差矩阵
 static float32 P_update[5][5] 	    = {{0}};        //当前修正后的协方差矩阵
 //static float32 P_update_last[5][5]  = {0};		   //上一次修正后的协方差矩阵
 
-static float32 X_predict[5][1]      = {{0}};		   //当前X状态的预测值
-static float32 X_predict_last[5][1] = {{0}};		   //上一次 X状态的预测值
-static float32 X_update[5][1]       = {{0}};		   //当前X状态修正后的预测值
-static float32 X_update_last[5][1]  = {{0}};		   //上一次 X状态修正后预测值
+static float32 X_predict[5]      = {0};		   //当前X状态的预测值
+static float32 X_predict_last[5] = {0};		   //上一次 X状态的预测值
+static float32 X_update[5]    = {0};		   //当前X状态修正后的预测值
+static float32 X_update_last[5] = {0};		   //上一次 X状态修正后预测值
 
-static float32 StateT_X[5][1] 	    = {0};         //当前X的状态转移矩阵
-static float32 Ja[5][5]       		= {0};		   //非线性卡尔曼滤波，状态X偏导矩阵Ja
-static float32 Q[5][5]              = {0};         //外部干扰协方差矩阵Q
-static float32 K[5][5]              = {0};         //卡尔曼增益
+static float32 StateT_X[5] = {0};         //当前X的状态转移矩阵
+static float32 Ja[5][5]    = {{0}};		   //非线性卡尔曼滤波，状态X偏导矩阵Ja
+static float32 Q[5][5]     = {{0}};         //外部干扰协方差矩阵Q
+static float32 K[5][5]     = {{0}};         //卡尔曼增益
 
 
 static float32 Results[5][5]		= {0};         //用于保存矩阵运算后的结果
