@@ -48,7 +48,7 @@ __attribute__ ((aligned(256)))  volatile int16_t g_adc3Data[2][ADC_DATA_LEN];
   */
 void VoiceInit(void)
 {
-//	ADC_InitConfig(MIC1, 1000000); //初始化 1号麦克风
+	// ADC_InitConfig(MIC1, 1000000); //初始化 1号麦克风
 	ADC_InitConfig(MIC2, 1000000); //初始化 2号麦克风
 	ADC_InitConfig(MIC3, 1000000); //初始化 3号麦克风
 	ADC_InitConfig(MIC4, 1000000); //初始化 4号麦克风
@@ -227,7 +227,7 @@ void VoiceProcess(void)
 				z = (seta-90)*1.0;
 
 				//判断灯在前还是在后
-				if(S > S_sub){//灯在车尾
+				if(S < S_sub){//灯在车尾
 					direct_flag = -1;
 				}
 				else{
