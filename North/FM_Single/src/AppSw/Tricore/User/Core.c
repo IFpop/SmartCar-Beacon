@@ -22,7 +22,6 @@ __attribute__ ((aligned(256))) cfloat32 In4[2048];
 
 void prodatsfft(int16_t* acorIndex,int16_t * Data1, int16_t * Data2,int16_t * Data3,int16_t * Data4, uint16_t L){
 	uint16_t  i = 0,j = 0;
-	uint16_t  nL = 2*L;
 	float maxvalue[3] = {0.0,0.0,0.0};
 //	float abs_H = 0.0;
 	// ∫Û≤ø∑÷÷√0

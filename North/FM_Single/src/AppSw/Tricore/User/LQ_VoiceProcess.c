@@ -253,7 +253,7 @@ void VoiceProcess(void)
 						direct_flag = 1;
 					}
 
-					if(S > 50 ){//距离大于50cm才会决策
+					if(S > 40 ){//距离大于40cm才会决策
 						last_direct[length++] = direct_flag;
 						if(length == 3){
 							length = 0;

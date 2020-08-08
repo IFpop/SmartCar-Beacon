@@ -75,7 +75,9 @@ int core0_main (void)
 
     while(1)//主循环
 	{
-		 TOF10120();//遥控状态下 TOF10120运行一次约9ms
+    	if(arrive_flag == 0){
+    		 TOF10120();//遥控状态下 TOF10120运行一次约9ms
+    	}
     	 delayms(20);
 
 //    	sprintf(txt,"x:%02f",vec.x);
