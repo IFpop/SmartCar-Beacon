@@ -75,7 +75,32 @@ const void *UartIrqFuncPointer[12] = {&UART0_RX_IRQHandler, &UART0_TX_IRQHandler
 void UART0_RX_IRQHandler(void)
 {
 	IfxAsclin_Asc_isrReceive(&g_UartConfig[0]);
+	static uint8_t buffer_Cam[20]; //记录信息
+	static int receive_start_flag = 0; //标记一次传送是否完成
+	static uint8_t *ptr = 0;
 
+	//从通道中获取一个字节
+	uint8_t  data = UART_GetChar(Cam);
+	if (data == 's') //一共会有两种模式
+	{
+		ptr = buffer_Cam;
+		receive_start_flag = 1;
+	}
+	else if (data == '\n')
+	{
+		*ptr = '\0';
+		ptr = buffer_Cam;
+		if (receive_start_flag == 1)
+		{
+			receive_start_flag = 0;
+			After_Receive_Cam(buffer_Cam); //接收之后的处理
+		}
+	}
+	else
+	{
+		*ptr = data;
+		++ptr;
+	}
 }
 
 void UART0_TX_IRQHandler(void)
@@ -144,37 +169,37 @@ void UART2_RX_IRQHandler(void)
 {
 	IfxAsclin_Asc_isrReceive(&g_UartConfig[2]);
 	/* 用户代码 */
-	static uint8_t buffer2[11]; //记录信息
-	static uint8_t count = 0;  //计数
-	// 记录数据
-	uint8_t ucStr[6]; 
+// 	static uint8_t buffer2[11]; //记录信息
+// 	static uint8_t count = 0;  //计数
+// 	// 记录数据
+// 	uint8_t ucStr[6]; 
 
-	//从通道中获取一个字节
-	buffer2[count] = UART_GetChar(UART2);
-	if(count == 0 && buffer2[0] != 0x55){
-		return;
-	}
-	count++;
-	if(count == 11){
-		count = 0;
-		ucStr[0]=buffer2[2];
-		ucStr[1]=buffer2[3];
-		ucStr[2]=buffer2[4];
-		ucStr[3]=buffer2[5];
-		ucStr[4]=buffer2[6];
-		ucStr[5]=buffer2[7];
-		switch(buffer2[1]){
-			case 0x51:
-//				After_Jy_Receive_a(ucStr);
-				break;
-			case 0x52:
-				After_Jy_Receive_w((uint8_t*)ucStr);
-			    break;
-			case 0x53:
-//				After_Jy_Receive_Angle(ucStr);
-				break;
-		}
-	}
+// 	//从通道中获取一个字节
+// 	buffer2[count] = UART_GetChar(UART2);
+// 	if(count == 0 && buffer2[0] != 0x55){
+// 		return;
+// 	}
+// 	count++;
+// 	if(count == 11){
+// 		count = 0;
+// 		ucStr[0]=buffer2[2];
+// 		ucStr[1]=buffer2[3];
+// 		ucStr[2]=buffer2[4];
+// 		ucStr[3]=buffer2[5];
+// 		ucStr[4]=buffer2[6];
+// 		ucStr[5]=buffer2[7];
+// 		switch(buffer2[1]){
+// 			case 0x51:
+// //				After_Jy_Receive_a(ucStr);
+// 				break;
+// 			case 0x52:
+// 				After_Jy_Receive_w((uint8_t*)ucStr);
+// 			    break;
+// 			case 0x53:
+// //				After_Jy_Receive_Angle(ucStr);
+// 				break;
+// 		}
+// 	}
 }
 
 void UART2_TX_IRQHandler(void)

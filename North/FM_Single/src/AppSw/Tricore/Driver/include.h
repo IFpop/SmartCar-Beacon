@@ -26,14 +26,18 @@ QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ*/
 #define MIC4 ADC3
 #define RF ADC4
 //--------------UART-------------------------
+#define Cam UART0
 #define Bluetooth UART1
-#define Cam UART2
+#define Jy61 UART2
+//--------------Cam--------------------------
+#define Cam_RX UART0_RX_P14_1
+#define Cam_TX UART0_TX_P14_0
 //--------------Bluetooth---------------------
 #define Bluetooth_RX UART1_RX_P02_3
 #define Bluetooth_TX UART1_TX_P02_2
-//------------cam----------------------
-#define Cam_RX UART2_RX_P33_8
-#define Cam_TX UART2_TX_P33_9
+//------------Jy61----------------------
+#define Jy61_RX UART2_RX_P33_8
+#define Jy61_TX UART2_TX_P33_9
 //-----------motor---------------------
 #define Motor1_port1 P00_3
 #define Motor1_port2 P00_4

@@ -43,29 +43,44 @@ void After_Receive_Cam(uint8_t* buffer){
 	int y = 0;
 	int w = 0;
 	int h = 0;
+	int length = 0;
 
-	sscanf((const char*)buffer, "%d %d %d %d",&x,&y,&w,&h);
-	TFTSPI_P8X16Str(1,1,(char *)buffer,u16WHITE,u16BLACK);		//字符串显示
-	if(x != -2000){
-		count++;
-	}
-	else{
-		count = 0;
-	}
-	if(count == 2){
-		offset_flag = 0;
-		int mid = x + w/2;
-		if(mid < 80){
-			offset.x = 1;
-			offset.y = offset.x/3;
-			offset.z = 0;
-		}
-		else{
-			offset.x = 1;
-			offset.y = offset.x/3;
-			offset.z = 0;
-		}
-	}
+	sscanf((const char*)buffer, "%d %d %d %d %d",&x,&y,&w,&h,&length);
+	ANO_DT_send_int16(x, y, w, h, length, 0, 0,0);
+//	sprintf(txt,"Cam");
+//	TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//字符串显示
+//	sprintf(txt,"x:%d",x);
+//	TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//字符串显示
+//	sprintf(txt,"y:%d",y);
+//	TFTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//字符串显示
+//	sprintf(txt,"w:%d",w);
+//	TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//字符串显示
+//	sprintf(txt,"h:%d",h);
+//	TFTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//字符串显示
+//	sprintf(txt,"length:%d",length);
+//	TFTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//字符串显示
+
+	// TFTSPI_P8X16Str(1,1,(char *)buffer,u16WHITE,u16BLACK);		//字符串显示
+	// if(x != -2000){
+	// 	count++;
+	// }
+	// else{
+	// 	count = 0;
+	// }
+	// if(count == 2){
+	// 	offset_flag = 0;
+	// 	int mid = x + w/2;
+	// 	if(mid < 80){
+	// 		offset.x = 1;
+	// 		offset.y = offset.x/3;
+	// 		offset.z = 0;
+	// 	}
+	// 	else{
+	// 		offset.x = 1;
+	// 		offset.y = offset.x/3;
+	// 		offset.z = 0;
+	// 	}
+	// }
 }
 
 void After_Jy_Receive_Angle(uint8_t* buffer){

@@ -33,13 +33,13 @@ int core1_main (void)
     //等待CPU0 初始化完成
     while(!IfxCpu_acquireMutex(&mutexCpu0InitIsOk));
 
-     VoiceInit();
-     Init_RDA5807();
-//     Test_RDA5807();
+    //  VoiceInit();
+    //  Init_RDA5807();
+    // Test_RDA5807();
 
     while(1)//主循环
     {
-    	VoiceProcess();
+    	// VoiceProcess();
     }
 
 }
