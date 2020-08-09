@@ -44,6 +44,7 @@ void init_motor(void){
 //	STM_InitConfig(STM1, STM_Channel_0, 50000);//每隔50ms获取一次测距模块的值
 }
 
+static uint32_t Rda_count = 0;
 //初始化RDA5807
 void Init_RDA5807(void){
 	unsigned char RSSI = 0;
@@ -68,10 +69,14 @@ void Init_RDA5807(void){
 	while(1){
 		RSSI=RDA5807_GetRssi();
 		if(RSSI > 30){  // 准备发车
-			break;
+			Rda_count++;
 		}
 		else{ // 等待声音信号
+			Rda_count = 0;
 			continue;
+		}
+		if(Rda_count == 2){
+			break;
 		}
 		delayms(50);
 	}
