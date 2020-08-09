@@ -29,7 +29,7 @@ IfxCpu_mutexLock mutevec = 0;
 struct vector3f_t vec = {0.0f,0.0f,0.0f};
 struct vector3f_t offset = {0.0f,0.0f,0.0f};
 uint32_t offset_flag = 0;
-uint32_t direct_flag = 0;   //默认在前方 0-前方  1-后方
+uint32_t direct_flag = 0;   //默认在前方 1-前方  1--后方
 uint32_t arrive_flag = 0;   // 1 表示达到灭灯距离
 uint32_t z_change_flag = 0;
 float w_target = 0.0;
@@ -77,7 +77,7 @@ int core0_main (void)
 
     while(1)//主循环
 	{
-    	 if(arrive_flag == 0){
+    	 if(arrive_flag == 0&&direct_flag!=0){
     	 	 TOF10120();//遥控状态下 TOF10120运行一次约9ms
     	 }
     	 delayms(10);
