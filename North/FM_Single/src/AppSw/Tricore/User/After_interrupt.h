@@ -15,8 +15,13 @@
 #define Cam_k 1.0
 
 // PD z 方向控制参数
-#define kp 1.02
-#define kd 5.75
+//#define kp 1.02
+//#define kd 5.75
+
+//#define kp 0.8
+//#define kd 9
+#define kp 1
+#define kd 0
 
 void After_bluetoothIRQ(uint8_t, uint8_t*);
 void After_Receive_Cam(uint8_t*);

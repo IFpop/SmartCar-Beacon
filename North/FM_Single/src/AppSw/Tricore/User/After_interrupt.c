@@ -107,7 +107,7 @@ void After_Jy_Receive_w(uint8_t* buffer){
 	}
 	float angle = 0;
 	w_error = w_target-w_sum_error;
-//	w_error = 90-w_sum_error;
+//	w_error = 180-w_sum_error;
 	angle = kp*w_error+kd*(w_error-w_last_error);
 	w_last_error = w_error;
 	if(IfxCpu_acquireMutex(&mutevec)){
@@ -115,6 +115,6 @@ void After_Jy_Receive_w(uint8_t* buffer){
 		IfxCpu_releaseMutex(&mutevec);
 	}
 
-//	ANO_DT_send_int16(w_error, w_last_error, V_w[2], angle, w_sum_error, 0, 0,0);
+	ANO_DT_send_int16(w_error, w_last_error, V_w[2], angle, w_sum_error, 0, 0,0);
 }
 

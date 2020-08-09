@@ -169,6 +169,7 @@ void VoiceProcess(void)
 
 	success_f = 1;  //默认是计算成功
 	z_change_flag = 0;
+//	if(dd == 0){
 	if(AdcFinishFlag)
 	{
 		/* 记录时间 */
@@ -195,7 +196,7 @@ void VoiceProcess(void)
 		if(res < 0){
 			res = -res;
 		}
-		if(S1 <= 550 && S2 <= 550 && S_sub <= 550 && res <= 24){//res<=18  允许一定误差
+		if(S1 <= 650 && S2 <= 650 && S_sub <= 650 && res <= 24){//res<=18  允许一定误差
 			M2sum = S1*S1+S2*S2;
 			Mid = M2sum/2 - 81;
 			if(Mid >= 0){
@@ -233,19 +234,19 @@ void VoiceProcess(void)
 				stop_count = 0;
 				if(success_f){
 					if(S < 150){  // 进入这个范围，开始瞄准灯的旁边
-						// 将指定目标定在灯的侧边
-						if(0 < seta && seta < 90){
-							seta += 180.0*obacle_length/(S*pi);
-						}
-						else{
-							seta -= 180.0*obacle_length/(S*pi);
-						}
-						if(seta < 0){
-							seta = 0;
-						}
-						else if(seta > 180){
-							seta = 180;
-						}
+						 // 将指定目标定在灯的侧边
+						 if(0 < seta && seta < 90){
+						 	seta += 180.0*obacle_length/(S*pi);
+						 }
+						 else{
+						 	seta -= 180.0*obacle_length/(S*pi);
+						 }
+						 if(seta < 0){
+						 	seta = 0;
+						 }
+						 else if(seta > 180){
+						 	seta = 180;
+						 }
 					}
 
 					x = cosf(seta*pi/180)*1.0;//cosf和sinf处理的是弧度
@@ -303,5 +304,6 @@ void VoiceProcess(void)
 		LED_Ctrl(LEDALL,RVS);
 		AdcFinishFlag = 0;
 	}
+//	}
 }
 
