@@ -115,6 +115,6 @@ void After_Jy_Receive_w(uint8_t* buffer){
 		IfxCpu_releaseMutex(&mutevec);
 	}
 
-	ANO_DT_send_int16(w_error, w_last_error, V_w[2], angle, w_sum_error, 0, 0,0);
+//	ANO_DT_send_int16(w_error, w_last_error, V_w[2], angle, w_sum_error, 0, 0,0);
 }
 

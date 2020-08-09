@@ -16,7 +16,7 @@ static float last_S = 0;
 static uint32_t stop_count = 0;
 
 /* 存放相关峰值下标 */
-int16_t acorIndex[3];
+int16_t acorIndex[3] = {0,0,0};
 /* 记录时间 */
 uint32_t nowTime = 0;
 /*
@@ -261,7 +261,7 @@ void VoiceProcess(void)
 						direct_flag = 1;
 					}
 
-					if(S > 60){//距离大于40cm才会决策
+					if(S > 60){//距离大于60cm才会决策
 						last_direct[length++] = direct_flag;
 						if(length == 3){
 							length = 0;
@@ -299,8 +299,8 @@ void VoiceProcess(void)
 					 TFTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//字符串显示
 				}
 			}
+//			ANO_DT_send_int16(S1, S2, S, S_sub, seta, 0, 1, 0);
 		}
-
 		LED_Ctrl(LEDALL,RVS);
 		AdcFinishFlag = 0;
 	}

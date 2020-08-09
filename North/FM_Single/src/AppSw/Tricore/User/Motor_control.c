@@ -99,9 +99,12 @@ static struct vector3f_t* speed2vector(int16_t* speed_vector, uint16_t speed){
 void speed_control(void){
 	if(offset_flag >= 1){
 		times ++;
-		vec_.x = (vec.x + offset.x*k)*100;
-		vec_.y = (vec.y + offset.y*k)*100;
-		vec_.z = (vec.z + offset.z*k);//offset.z =0
+//		vec_.x = (vec.x + offset.x*k)*100;
+//		vec_.y = (vec.y + offset.y*k)*100;
+//		vec_.z = (vec.z + offset.z*k);//offset.z =0
+		vec_.x = (offset.x*k)*100;
+		vec_.y = 0;
+		vec_.z = 0;//offset.z =0***********************
 	}
 	else{
 		times = 0;
@@ -111,22 +114,23 @@ void speed_control(void){
 	}
 
 	if(times == 3)//避障状态持续时间 times*30ms
+
 	{
 		times = 0;
 		offset_flag = 0;
 	}
 
 	// 设置速度分段
-	if(0 < S && S < 50){ //低速
+	if(0 < S && S < 80){ //低速*******************************************************
+		vec_.x *= 0.5;
+		vec_.y *= 0.5;
+	}
+	else if(S > 350){ // 高速*****************************************************************
 		vec_.x *= 0.8;
 		vec_.y *= 0.8;
 	}
-	else if(S > 350){ // 高速
-		vec_.x *= 1.25;
-		vec_.y *= 1.25;
-	}
 
-	vector2speed(&vec_,2.5);
+	vector2speed(&vec_,3);
 
 	enc1 = ENC_GetCounter(ENCODE1_INPUT);//1号电机
 	enc2 = ENC_GetCounter(ENCODE2_INPUT);//2号电机

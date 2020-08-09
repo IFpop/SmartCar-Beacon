@@ -98,7 +98,7 @@ void prodatsfft(int16_t* acorIndex,int16_t * Data1, int16_t * Data2,int16_t * Da
 		}
 	}
 
-	// ANO_DT_send_int16(acorIndex[1], maxvalue[1],acorIndex[0], maxvalue[0], acorIndex[2], maxvalue[2], 1, 0);
+//	 ANO_DT_send_int16(acorIndex[1], maxvalue[1],acorIndex[0], maxvalue[0], acorIndex[2], maxvalue[2], 1, 0);
 
 	return;
 }

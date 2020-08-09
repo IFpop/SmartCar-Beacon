@@ -35,6 +35,7 @@ int core1_main (void)
 
      VoiceInit();
      Init_RDA5807();
+//     Test_RDA5807();
 
     while(1)//Ö÷Ñ­»·
     {

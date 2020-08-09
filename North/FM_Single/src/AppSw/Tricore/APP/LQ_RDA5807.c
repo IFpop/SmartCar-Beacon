@@ -261,12 +261,12 @@ void Test_RDA5807(void)
 //
 //  TFTSPI_P8X16Str(3,1,"FM Radio",u16WHITE,u16BLACK);//字符串显示
 
-//  while (1)
-//  {
-//	RSSI = RDA5807_GetRssi();//显示信号强度0~127
-//	sprintf(txt,"RSSI:%02d  ",RSSI);
-//	TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//字符串显示
-//    Key_num = KEY_Read_All();;
+  while (1)
+  {
+	RSSI = RDA5807_GetRssi();//显示信号强度0~127
+	sprintf(txt,"RSSI:%02d  ",RSSI);
+	TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//字符串显示
+    Key_num = KEY_Read_All();;
 //    switch(Key_num)
 //    {
 //        case 3: 			     //KEY0 KEY1 同时按下声音减
@@ -334,9 +334,9 @@ void Test_RDA5807(void)
 //		default:
 //		  break;
 //    }
-//    LED_Ctrl(LED0,RVS);        //电平翻转,LED闪烁
-//    delayms(100);              //延时等待
-//  }
+    LED_Ctrl(LED0,RVS);        //电平翻转,LED闪烁
+    delayms(100);              //延时等待
+  }
 }
 
 
