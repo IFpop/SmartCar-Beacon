@@ -51,8 +51,8 @@ void Init_RDA5807(void){
 
 	//显示芯片ID 0x5804
 	RXFreq = RDA5807_ReadReg(RDA_R00);
-	 sprintf(txt,"Chip:0x%04X",RXFreq);
-	 TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//字符串显示
+	sprintf(txt,"Chip:0x%04X",RXFreq);
+	TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//字符串显示
 
 	RSSI=RDA5807_GetRssi();//显示信号强度0~127
 	sprintf(txt,"RSSI:%02d  ",RSSI);

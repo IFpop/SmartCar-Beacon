@@ -40,6 +40,11 @@ extern uint32_t arrive_flag;    // 1 表示达到灭灯距离
 
 extern uint32_t dd;
 
+
+extern uint32_t Cut_down_len ;
+extern float obacle_length;   // 避障距离
+extern float kp = 1.0;
+
 extern char txt[50];
 
 #endif /* SRC_APPSW_TRICORE_MAIN_MAIN_H_ */

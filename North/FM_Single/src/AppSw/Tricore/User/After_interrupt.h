@@ -20,7 +20,6 @@
 
 //#define kp 0.8
 //#define kd 9
-#define kp 1
 #define kd 0
 
 void After_bluetoothIRQ(uint8_t, uint8_t*);
