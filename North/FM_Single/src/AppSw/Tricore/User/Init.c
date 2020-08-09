@@ -73,5 +73,6 @@ void Init_RDA5807(void){
 		else{ // µÈ´ıÉùÒôĞÅºÅ
 			continue;
 		}
+		delayms(50);
 	}
 }
