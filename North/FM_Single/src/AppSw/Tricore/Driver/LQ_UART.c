@@ -171,7 +171,7 @@ void UART2_RX_IRQHandler(void)
 				After_Jy_Receive_w((uint8_t*)ucStr);
 			    break;
 			case 0x53:
-//				After_Jy_Receive_Angle(ucStr);
+				After_Jy_Receive_Angle(ucStr);
 				break;
 		}
 	}

@@ -291,12 +291,12 @@ void VoiceProcess(void)
 						z_change_flag = 1;
 						IfxCpu_releaseMutex(&mutevec);
 					}
-					 sprintf(txt,"S:%f",S);
-					 TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-					 sprintf(txt,"seta:%4f",seta);
-					 TFTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-					 sprintf(txt,"S_:%4f",S_sub);
-					 TFTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+//					 sprintf(txt,"S:%f",S);
+//					 TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+//					 sprintf(txt,"seta:%4f",seta);
+//					 TFTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+//					 sprintf(txt,"S_:%4f",S_sub);
+//					 TFTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 				}
 			}
 //			ANO_DT_send_int16(S1, S2, S, S_sub, seta, 0, 1, 0);

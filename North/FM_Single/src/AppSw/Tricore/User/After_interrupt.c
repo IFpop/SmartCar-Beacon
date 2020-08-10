@@ -83,7 +83,7 @@ void After_Jy_Receive_Angle(uint8_t* buffer){
 //	sprintf(txt,"z_1:%d",V_Angle[2]);
 //	TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//字符串显示
 
-//	ANO_DT_send_int16(V_Angle[0], V_Angle[1], V_Angle[2], 0, 0, 0, 0,0);
+	ANO_DT_send_int16(V_Angle[0], V_Angle[1], V_Angle[2], 0, 0, 0, 0,0);
 }
 void After_Jy_Receive_a(uint8_t* buffer){
 	static int16_t V_a[3];

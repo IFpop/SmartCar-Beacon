@@ -76,8 +76,10 @@ void Init_RDA5807(void){
 			continue;
 		}
 		if(Rda_count == 2){
+
 			break;
 		}
 		delayms(50);
 	}
+//	ANO_DT_send_int16(RSSI, 0, 0, 0, 0, 0, 0, 0);
 }
