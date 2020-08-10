@@ -18,10 +18,10 @@ void init_motor(void){
 	UART_InitConfig(Cam_RX,Cam_TX, 9600);
 
 	//电机初始化
-	ATOM_PWM_InitConfig(ATOMPWM0, 0, 12500);
-	ATOM_PWM_InitConfig(ATOMPWM1, 0, 12500);
-	ATOM_PWM_InitConfig(ATOMPWM2, 0, 12500);
-	ATOM_PWM_InitConfig(ATOMPWM3, 0, 12500);
+	ATOM_PWM_InitConfig(ATOMPWM0, 8000, 12500);
+	ATOM_PWM_InitConfig(ATOMPWM1, 5000, 12500);
+	ATOM_PWM_InitConfig(ATOMPWM2, 5000, 12500);
+	ATOM_PWM_InitConfig(ATOMPWM3, 8000, 12500);
 //
 	//电机初始化 1 0反转 0 1正转
 	PIN_InitConfig(Motor1_port1, PIN_MODE_OUTPUT, 0);//1号电机
@@ -40,7 +40,7 @@ void init_motor(void){
 
 	IIC_Init();
 	//定时中断初始化
-	STM_InitConfig(STM0, STM_Channel_0, 30000);//每隔30ms获取一次编码器的值
+//	STM_InitConfig(STM0, STM_Channel_0, 30000);//每隔30ms获取一次编码器的值
 //	STM_InitConfig(STM1, STM_Channel_0, 50000);//每隔50ms获取一次测距模块的值
 }
 

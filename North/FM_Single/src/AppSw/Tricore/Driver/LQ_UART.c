@@ -121,34 +121,34 @@ void UART1_RX_IRQHandler(void)
 	IfxAsclin_Asc_isrReceive(&g_UartConfig[1]);
 
 	/* 用户代码 */
-	static uint8_t buffer[20]; //记录信息
-	static uint8_t control_type = 0;  //记录模式类型
-	static int receive_start_flag = 0; //标记一次传送是否完成
-	static uint8_t *ptr = 0;
-
-	//从通道中获取一个字节
-	uint8_t  data = UART_GetChar(UART1);
-	if (data == 0xc1 || data == 0xc3) //一共会有两种模式
-	{
-		ptr = buffer;
-		control_type = data;
-		receive_start_flag = 1;
-	}
-	else if (data == '\0')
-	{
-		*ptr = '\0';
-		ptr = buffer;
-		if (receive_start_flag == 1)
-		{
-			receive_start_flag = 0;
-//			After_bluetoothIRQ(control_type, buffer); //接收之后的处理
-		}
-	}
-	else
-	{
-		*ptr = data;
-		++ptr;
-	}
+//	static uint8_t buffer[20]; //记录信息
+//	static uint8_t control_type = 0;  //记录模式类型
+//	static int receive_start_flag = 0; //标记一次传送是否完成
+//	static uint8_t *ptr = 0;
+//
+//	//从通道中获取一个字节
+//	uint8_t  data = UART_GetChar(UART1);
+//	if (data == 0xc1 || data == 0xc3) //一共会有两种模式
+//	{
+//		ptr = buffer;
+//		control_type = data;
+//		receive_start_flag = 1;
+//	}
+//	else if (data == '\0')
+//	{
+//		*ptr = '\0';
+//		ptr = buffer;
+//		if (receive_start_flag == 1)
+//		{
+//			receive_start_flag = 0;
+////			After_bluetoothIRQ(control_type, buffer); //接收之后的处理
+//		}
+//	}
+//	else
+//	{
+//		*ptr = data;
+//		++ptr;
+//	}
 }
 
 void UART1_TX_IRQHandler(void)

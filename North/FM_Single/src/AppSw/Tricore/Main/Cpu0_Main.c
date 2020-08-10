@@ -77,10 +77,10 @@ int core0_main (void)
 
     while(1)//主循环
 	{
-    	 if(arrive_flag == 0&&direct_flag!=0){
-    	 	 TOF10120();//遥控状态下 TOF10120运行一次约9ms
-    	 }
-    	 delayms(10);
+//    	 if(arrive_flag == 0&&direct_flag!=0){
+//    	 	 TOF10120();//遥控状态下 TOF10120运行一次约9ms
+//    	 }
+//    	 delayms(10);
 
 //    	sprintf(txt,"x:%02f",vec.x);
 //    	TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//字符串显示

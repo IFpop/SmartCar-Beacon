@@ -39,6 +39,14 @@ int core1_main (void)
 
     while(1)//Ö÷Ñ­»·
     {
+//    	int x = 1;
+//    	int y = 2;
+//    	int w = 3;
+//    	int h = 4;
+//    	int length = 5;
+//
+//    	//sscanf((const char*)buffer, "%d %d %d %d %d",&x,&y,&w,&h,&length);
+//    	ANO_DT_send_int16(x, y, w, h, length, 0, 0,0);
     	// VoiceProcess();
     }
 
