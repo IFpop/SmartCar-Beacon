@@ -12,6 +12,9 @@ void init_motor(void){
 	// 显示屏
 	TFTSPI_Init(1);         //LCD初始化  0:横屏  1：竖屏
 	TFTSPI_CLS(u16BLACK);   //黑色屏幕
+	
+	Test_terminal();
+
 	// 蓝牙初始化
 	UART_InitConfig(Bluetooth_RX,Bluetooth_TX, 38400);
 	// 摄像头通信

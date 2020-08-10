@@ -130,7 +130,7 @@ void speed_control(void){
 		vec_.y *= 0.8;
 	}
 
-	vector2speed(&vec_,3);
+	vector2speed(&vec_,V_speed);
 
 	enc1 = ENC_GetCounter(ENCODE1_INPUT);//1号电机
 	enc2 = ENC_GetCounter(ENCODE2_INPUT);//2号电机
