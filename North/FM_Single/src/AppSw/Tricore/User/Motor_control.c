@@ -10,7 +10,7 @@
 static float k = 1.4;
 static uint32_t times = 0;
 static struct vector3f_t vec_ = {0.0f,0.0f,0.0f};
-static int16_t S[4] = {0,0,0,0};
+static int16_t ENC[4] = {0,0,0,0};
 
 static volatile int16_t target1 = 0;//轮子最高转速2500左右
 static volatile int16_t target2 = 0;
@@ -29,9 +29,9 @@ volatile 	int16_t enc2  = 0;
 volatile	int16_t enc3  = 0;
 volatile	int16_t enc4  = 0;
 
-//static float PD_error = 0.0;
-//static float PD_last_error = 0.0;
-//static float z_sum_error = 0;
+static float PD_error = 0.0;
+static float PD_last_error = 0.0;
+static float z_sum_error = 0;
 
 // 限制幅值函数，指定值范围应该在low~high之间
 float constrain_float(float amt, float low, float high)
@@ -145,10 +145,10 @@ void speed_control(void){
 	enc4 = -enc4;
 
 	//车轮PD
-	// S[0] = enc1;
-	// S[1] = enc2;
-	// S[2] = enc3;
-	// S[3] = enc4;
+	// ENC[0] = enc1;
+	// ENC[1] = enc2;
+	// ENC[2] = enc3;
+	// ENC[3] = enc4;
 
 	// Servo_PD();
 
@@ -238,7 +238,7 @@ int16_t motor_pid(int16_t pulse, int16_t target_pulse,float P,float I,int16_t* s
 }
 
 void Servo_PD(void){
-	struct vector3f_t * vec_speed = speed2vector(S,1);
+	struct vector3f_t * vec_speed = speed2vector((int16_t*)ENC,1);
 
 	float w = (vec_speed->z*180)/(35.06*pi);  // 角速度
 
@@ -250,7 +250,7 @@ void Servo_PD(void){
 	}
 
 	float angle = 0;
-	PD_error = target_-z_sum_error;
+	PD_error = w_target-z_sum_error;
 	angle = kp*PD_error+kd*(PD_error-PD_last_error);
 	PD_last_error = PD_error;
 	if(IfxCpu_acquireMutex(&mutevec)){
