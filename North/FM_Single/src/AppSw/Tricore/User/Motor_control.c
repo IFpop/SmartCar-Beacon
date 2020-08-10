@@ -29,9 +29,9 @@ volatile 	int16_t enc2  = 0;
 volatile	int16_t enc3  = 0;
 volatile	int16_t enc4  = 0;
 
-//static float PD_error = 0.0;
-//static float PD_last_error = 0.0;
-//static float z_sum_error = 0;
+static float PD_error = 0.0;
+static float PD_last_error = 0.0;
+static float z_sum_error = 0;
 
 // 限制幅值函数，指定值范围应该在low~high之间
 float constrain_float(float amt, float low, float high)
