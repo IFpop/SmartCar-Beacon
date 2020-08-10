@@ -145,12 +145,12 @@ void speed_control(void){
 	enc4 = -enc4;
 
 	//³µÂÖPD
-	S[0] = enc1;
-	S[1] = enc2;
-	S[2] = enc3;
-	S[3] = enc4;
+	// S[0] = enc1;
+	// S[1] = enc2;
+	// S[2] = enc3;
+	// S[3] = enc4;
 
-	Servo_PD();
+	// Servo_PD();
 
 	int16_t motor1_pluse = motor_pid(enc1,target1,PID_P1,PID_I1,(int16_t*)&sum_error,0);
 	int16_t motor2_pluse = motor_pid(enc2,target2,PID_P2,PID_I2,(int16_t*)&sum_error,1);
