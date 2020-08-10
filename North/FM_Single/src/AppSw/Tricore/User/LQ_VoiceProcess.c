@@ -195,7 +195,7 @@ void VoiceProcess(void)
 		if(res < 0){
 			res = -res;
 		}
-		if(S1 <= 650 && S2 <= 650 && S_sub <= 650 && res <= 24){//res<=18  允许一定误差
+		if(S1 <= 500 && S2 <= 500 && S_sub <= 500 && res <= 24){//res<=18  允许一定误差
 			M2sum = S1*S1+S2*S2;
 			Mid = M2sum/2 - 81;
 			if(Mid >= 0){

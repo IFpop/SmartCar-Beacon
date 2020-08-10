@@ -10,6 +10,9 @@ static uint32_t count = 0;
 static float w_error = 0.0f;
 static float w_last_error = 0.0f;
 static float w_sum_error = 0.0f;
+
+static uint32_t  Pitch_count1 = 0;
+static uint32_t  Pitch_count2 = 0;
 /*
  * 遥控接收
  */
@@ -77,13 +80,37 @@ void After_Jy_Receive_Angle(uint8_t* buffer){
 //	sprintf(txt,"angle");
 //	TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//字符串显示
 //	sprintf(txt,"x_1:%d",V_Angle[0]);
-//	TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//字符串显示
-//	sprintf(txt,"y_1:%d",V_Angle[1]);
+	// TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//字符串显示
+	// sprintf(txt,"y_1:%d",V_Angle[1]);
 //	TFTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//字符串显示
 //	sprintf(txt,"z_1:%d",V_Angle[2]);
 //	TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//字符串显示
 
-	ANO_DT_send_int16(V_Angle[0], V_Angle[1], V_Angle[2], 0, 0, 0, 0,0);
+	if(V_Angle[1] - Pitch >= 8){
+		Pitch_count1++;	
+	}
+	else if(V_Angle[1] - Pitch <= -8){
+		Pitch_count2++;
+	}
+	else{
+		on_the_light = 0;
+		Pitch_count1 = 0;
+		Pitch_count2 = 0;
+	}
+
+	if(Pitch_count1 >= 3){
+		on_the_light = 1;
+		vec.x = 0;
+		vec.y = -1;
+		vec.z = 0;
+	}
+	else if(Pitch_count2 >= 3){
+		on_the_light = 1;
+		vec.x = 0;
+		vec.y = 1;
+		vec.z = 0;
+	}
+//	ANO_DT_send_int16(on_the_light, V_Angle[1],vec.y, Pitch_count1, Pitch_count2, 0, 0,0);
 }
 void After_Jy_Receive_a(uint8_t* buffer){
 	static int16_t V_a[3];

@@ -7,7 +7,7 @@
 
 #include "include.h"
 
-static float k = 1.2;
+static float k = 1.4;
 static uint32_t times = 0;
 static struct vector3f_t vec_ = {0.0f,0.0f,0.0f};
 
@@ -229,9 +229,7 @@ int16_t motor_pid(int16_t pulse, int16_t target_pulse,float P,float I,int16_t* s
 }
 
 void Servo_PD(void){
-//	int16_t S[4];
 //
-//	int target_ = 90;
 //
 //	S[0] = -ENC_GetCounter(ENCODE1_INPUT);//1号电机
 //	S[1] = +ENC_GetCounter(ENCODE2_INPUT);//2号电机

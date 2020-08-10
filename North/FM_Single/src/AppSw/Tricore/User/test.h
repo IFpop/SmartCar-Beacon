@@ -10,7 +10,7 @@
 
 #define Change_ob  0.5
 #define Change_cut 5
-#define Change_kp  0.2
+#define Change_kp  0.1
 #define Change_speed 0.1
 
 #define Button1 P02_0
@@ -18,6 +18,7 @@
 #define Button3 P02_6
 #define Button4 P00_0
 
+#define DELAYTIME 150
 
 void test_bluetooth(void);
 void test_motor(void);

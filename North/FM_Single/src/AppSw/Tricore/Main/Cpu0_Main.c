@@ -33,14 +33,18 @@ uint32_t offset_flag = 0;
 uint32_t direct_flag = 0;   //默认在前方 1-前方  1--后方
 uint32_t arrive_flag = 0;   // 1 表示达到灭灯距离
 uint32_t z_change_flag = 0;
+uint32_t on_the_light = 0; 
+
 float w_target = 0.0;
 uint32_t dd = 0;
 float S = 0.0;
 
-float Cut_down_len = 80;
-float obacle_length = 33.5;   // 避障距离
+float Cut_down_len = 50;
+float obacle_length = 33.5;   // 横向偏移距离
 float kp = 1.0;
 float V_speed = 3;
+
+float Pitch = 2;
 
 char txt[50];
 
@@ -83,10 +87,11 @@ int core0_main (void)
 
     while(1)//主循环
 	{
-    	 if(arrive_flag == 0&&direct_flag!=0){
-    	 	 TOF10120();//遥控状态下 TOF10120运行一次约9ms
-    	 }
-    	 delayms(10);
+    	// TOF10120();
+		if(arrive_flag == 0&&direct_flag!=0 &&on_the_light==0){
+			TOF10120();//遥控状态下 TOF10120运行一次约9ms
+		}
+    	delayms(10);
 
 //    	sprintf(txt,"x:%02f",vec.x);
 //    	TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//字符串显示

@@ -33,15 +33,14 @@ int core1_main (void)
     //等待CPU0 初始化完成
     while(!IfxCpu_acquireMutex(&mutexCpu0InitIsOk));
 
-     VoiceInit();
-     Init_RDA5807();
-//     Test_RDA5807();
+    VoiceInit();
+    Init_RDA5807();
 
     uint32_t Rda_count = 0;
     unsigned char RSSI = 0;
     while(1)//主循环
     {
-    	RSSI=RDA5807_GetRssi();
+   	RSSI=RDA5807_GetRssi();
 		if(RSSI < 30){  // 准备发车
 			Rda_count++;
 		}

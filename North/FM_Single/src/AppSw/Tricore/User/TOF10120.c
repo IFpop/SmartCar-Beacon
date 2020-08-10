@@ -144,11 +144,17 @@ void TOF10120(void){
 		offset.z = b_z;
 		offset_flag = 1;
 	}
-//	sprintf(txt,"d4:%d",distance[4]);
-//	TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔ
-//	sprintf(txt,"d5:%d",distance[5]);
-//	TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔ
-//	sprintf(txt_tof,"d6:%d",distance[6]);
-//	TFTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔ
+	// sprintf(txt,"d4:%d",distance[1]);
+	// TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔ
+	// sprintf(txt,"d5:%d",distance[2]);
+	// TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔ
+	// sprintf(txt,"d6:%d",distance[3]);
+	// TFTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔ
+	// sprintf(txt,"d4:%d",distance[4]);
+	// TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔ
+	// sprintf(txt,"d5:%d",distance[5]);
+	// TFTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔ
+	// sprintf(txt,"d6:%d",distance[6]);
+	// TFTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔ
 
 }
