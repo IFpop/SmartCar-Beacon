@@ -36,6 +36,11 @@ float w_target = 0.0;
 uint32_t dd = 0;
 float S = 0.0;
 
+uint32_t Cut_down_len = 80;
+float obacle_length = 33.5;   // ±‹’œæ‡¿Î
+float kp = 1.0;
+float V_speed = 3;
+
 char txt[50];
 
 /*************************************************************************

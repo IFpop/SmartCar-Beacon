@@ -1,7 +1,7 @@
 #include "include.h"
 
 // 标记当前计算是否有效
-float success_f = 1;
+static uint32_t success_f = 1;
 
 // 声音计算出的中间变量
 float x = 0.0;
@@ -11,7 +11,6 @@ float z = 0.0;
 // 方向决策  投票 求均值
 static int32_t last_direct[3] = {0,0,0};
 static uint32_t length = 0;
-
 static float last_S = 0;
 static uint32_t stop_count = 0;
 
