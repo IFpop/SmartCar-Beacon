@@ -10,6 +10,7 @@
 static float k = 1.4;
 static uint32_t times = 0;
 static struct vector3f_t vec_ = {0.0f,0.0f,0.0f};
+static int16_t S[4] = {0,0,0,0};
 
 static volatile int16_t target1 = 0;//轮子最高转速2500左右
 static volatile int16_t target2 = 0;
@@ -143,6 +144,14 @@ void speed_control(void){
 	enc3 = +enc3;
 	enc4 = -enc4;
 
+	//车轮PD
+	S[0] = enc1;
+	S[1] = enc2;
+	S[2] = enc3;
+	S[3] = enc4;
+
+	Servo_PD();
+
 	int16_t motor1_pluse = motor_pid(enc1,target1,PID_P1,PID_I1,(int16_t*)&sum_error,0);
 	int16_t motor2_pluse = motor_pid(enc2,target2,PID_P2,PID_I2,(int16_t*)&sum_error,1);
 	int16_t motor3_pluse = motor_pid(enc3,target3,PID_P3,PID_I3,(int16_t*)&sum_error,2);
@@ -229,32 +238,25 @@ int16_t motor_pid(int16_t pulse, int16_t target_pulse,float P,float I,int16_t* s
 }
 
 void Servo_PD(void){
-//
-//
-//	S[0] = -ENC_GetCounter(ENCODE1_INPUT);//1号电机
-//	S[1] = +ENC_GetCounter(ENCODE2_INPUT);//2号电机
-//	S[2] = +ENC_GetCounter(ENCODE3_INPUT);//3号电机
-//	S[3] = -ENC_GetCounter(ENCODE4_INPUT);//4号电机
-//
-//	struct vector3f_t * vec_speed = speed2vector(S,1);
-//
-//	float w = vec_speed->z/35.06;  // 角速度
-//
-//	if(z_change_flag == 0){  // z没有发生改变
-//		z_sum_error += w*0.05;
-//	}
-//	else{
-//		z_sum_error = w*0.05;
-//	}
-//
-//	float angle = 0;
-//	PD_error = target_-z_sum_error;
-//	angle = kp*PD_error+kd*(PD_error-PD_last_error);
-//	PD_last_error = PD_error;
-//	if(IfxCpu_acquireMutex(&mutevec)){
-//		vec.z = angle;
-//		IfxCpu_releaseMutex(&mutevec);
-//	}
+	struct vector3f_t * vec_speed = speed2vector(S,1);
+
+	float w = (vec_speed->z*180)/(35.06*pi);  // 角速度
+
+	if(z_change_flag == 0){  // z没有发生改变
+		z_sum_error += w*0.05;
+	}
+	else{
+		z_sum_error = w*0.05;
+	}
+
+	float angle = 0;
+	PD_error = target_-z_sum_error;
+	angle = kp*PD_error+kd*(PD_error-PD_last_error);
+	PD_last_error = PD_error;
+	if(IfxCpu_acquireMutex(&mutevec)){
+		vec.z = angle;
+		IfxCpu_releaseMutex(&mutevec);
+	}
 //	ANO_DT_send_int16((int)PD_last_error, (int)PD_error, (int)target_, (int)vec_speed->z, (int)angle, (int)z_sum_error , (int)vec.z, 0);
 }
 
