@@ -106,7 +106,7 @@ void UART1_RX_IRQHandler(void)
 	if (data == 0xc1 || data == 0xc3) //一共会有两种模式
 	{
 		ptr = buffer;
-		control_type = data;
+//		control_type = data;
 		receive_start_flag = 1;
 	}
 	else if (data == '\0')

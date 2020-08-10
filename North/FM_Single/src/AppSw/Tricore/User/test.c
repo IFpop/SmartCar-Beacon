@@ -33,197 +33,228 @@ void test_DQ(void){
 
 void Print_Cmd(void){
 	TFTSPI_CLS(u16BLACK);   //ºÚÉ«ÆÁÄ»
-	sprintf(txt,"test terminal system");
-	FTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-	sprintf(txt,"you can do like following:");
-	FTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-	sprintf(txt,"1. change obacle_length");
-	FTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"test terminal");
+	TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"do:");
+	TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"1. change ob");
+	TFTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"2. change kp");
-	FTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-	sprintf(txt,"3. change cut_down_speed_len");
-	FTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"3. change cut");
+	TFTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"4. speed");
-	FTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-	sprintf(txt,"please touch 1~4 in button");
-	FTSPI_P8X16Str(1,6,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"1~4");
+	TFTSPI_P8X16Str(1,6,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 }
 
 uint32_t Change_obacle_length(void){
 	TFTSPI_CLS(u16BLACK);   //ºÚÉ«ÆÁÄ»
-	sprintf(txt,"Change_obacle_length");
-	FTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-	sprintf(txt,"you can do like following:");
-	FTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"Change_obacle");
+	TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"do:");
+	TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"1. add %f",(float)Change_ob);
-	FTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"2.sub %f",(float)Change_ob);
-	FTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"3. reback");
-	FTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"4. finished");
-	FTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-	sprintf(txt,"please touch 1~4 in button");
-	FTSPI_P8X16Str(1,6,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"1~4");
+	TFTSPI_P8X16Str(1,6,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 
 	while(1){
-		sprintf(txt,"cur_obacle_length %f",obacle_length);
-		FTSPI_P8X16Str(1,7,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+		uint32_t B1 = PIN_Read(Button1);
+		uint32_t B2 = PIN_Read(Button2);
+		uint32_t B3 = PIN_Read(Button3);
+		uint32_t B4 = PIN_Read(Button4);
+
+		sprintf(txt,"cur_ob %f",obacle_length);
+		TFTSPI_P8X16Str(1,7,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 		// ¼ì²â²¦Âë°´¼ü
-		if(1){
+		if(!B1){
+			delayms(DELAYTIME);
 			sprintf(txt,"add %f",(float)Change_ob);
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 			obacle_length += Change_ob;
 		}
-		else if(2){
+		else if(!B2){
+			delayms(DELAYTIME);
 			sprintf(txt,"sub %f",(float)Change_ob);
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 			obacle_length -= Change_ob;		
 		}
-		else if(3){
+		else if(!B3){
+			delayms(DELAYTIME);
 			sprintf(txt,"reback");
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 			return 1;
 		}
-		else if(4){
+		else if(!B4){
+			delayms(DELAYTIME);
 			sprintf(txt,"finished");
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 			return 2;
 		}
 	}
-	return 0;
 }
 uint32_t Change_kp_(void){
 	TFTSPI_CLS(u16BLACK);   //ºÚÉ«ÆÁÄ»
 	sprintf(txt,"Change_kp");
-	FTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-	sprintf(txt,"you can do like following:");
-	FTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"do:");
+	TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"1. add %f",(float)Change_kp);
-	FTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"2.sub %f",(float)Change_kp);
-	FTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"3. reback");
-	FTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"4. finished");
-	FTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-	sprintf(txt,"please touch 1~4 in button");
-	FTSPI_P8X16Str(1,6,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"1~4");
+	TFTSPI_P8X16Str(1,6,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 
 	while(1){
+		uint32_t B1 = PIN_Read(Button1);
+		uint32_t B2 = PIN_Read(Button2);
+		uint32_t B3 = PIN_Read(Button3);
+		uint32_t B4 = PIN_Read(Button4);
+
 		sprintf(txt,"cur_kp %f",kp);
-		FTSPI_P8X16Str(1,7,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+		TFTSPI_P8X16Str(1,7,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 		// ¼ì²â²¦Âë°´¼ü
-		if(1){
+		if(!B1){
+			delayms(DELAYTIME);
 			sprintf(txt,"add %f",(float)Change_kp);
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 			kp += Change_kp;
 		}
-		else if(2){
+		else if(!B2){
+			delayms(DELAYTIME);
 			sprintf(txt,"sub %f",(float)Change_kp);
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-			kp -= Change_kp;		
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			kp -= Change_kp;
 		}
-		else if(3){
+		else if(!B3){
+			delayms(DELAYTIME);
 			sprintf(txt,"reback");
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 			return 1;
 		}
-		else if(4){
+		else if(!B4){
+			delayms(DELAYTIME);
 			sprintf(txt,"finished");
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 			return 2;
 		}
 	}
-	return 0;
 }
 uint32_t  Change_cut_down_len(void){
 	TFTSPI_CLS(u16BLACK);   //ºÚÉ«ÆÁÄ»
-	sprintf(txt,"Change_cut_down_len");
-	FTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-	sprintf(txt,"you can do like following:");
-	FTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"Change_cut");
+	TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"do:");
+	TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"1. add %f",(float)Change_cut);
-	FTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"2.sub %f",(float)Change_cut);
-	FTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"3. reback");
-	FTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"4. finished");
-	FTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-	sprintf(txt,"please touch 1~4 in button");
-	FTSPI_P8X16Str(1,6,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"1~4");
+	TFTSPI_P8X16Str(1,6,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 
 	while(1){
-		sprintf(txt,"cur_cut_down_len %f",Cut_down_len);
-		FTSPI_P8X16Str(1,7,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+		uint32_t B1 = PIN_Read(Button1);
+		uint32_t B2 = PIN_Read(Button2);
+		uint32_t B3 = PIN_Read(Button3);
+		uint32_t B4 = PIN_Read(Button4);
+
+		sprintf(txt,"cur_cut %f",Cut_down_len);
+		TFTSPI_P8X16Str(1,7,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 		// ¼ì²â²¦Âë°´¼ü
-		if(1){
+		if(!B1){
+			delayms(DELAYTIME);
 			sprintf(txt,"add %f",(float)Change_cut);
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 			Cut_down_len += Change_cut;
 		}
-		else if(2){
+		else if(!B2){
+			delayms(DELAYTIME);
 			sprintf(txt,"sub %f",(float)Change_cut);
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 			Cut_down_len -= Change_cut;		
 		}
-		else if(3){
+		else if(!B3){
+			delayms(DELAYTIME);
 			sprintf(txt,"reback");
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 			return 1;
 		}
-		else if(4){
+		else if(!B4){
+			delayms(DELAYTIME);
 			sprintf(txt,"finished");
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 			return 2;
 		}
 	}
-	return 0;
 }
 uint32_t Change_Speed(void){
 	TFTSPI_CLS(u16BLACK);   //ºÚÉ«ÆÁÄ»
 	sprintf(txt,"Change_Speed");
-	FTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-	sprintf(txt,"you can do like following:");
-	FTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,0,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"do:");
+	TFTSPI_P8X16Str(1,1,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"1. add %f",(float)Change_speed);
-	FTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-	sprintf(txt,"2.sub %f",(float)Change_cut);
-	FTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,2,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"2.sub %f",(float)Change_speed);
+	TFTSPI_P8X16Str(1,3,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"3. reback");
-	FTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	TFTSPI_P8X16Str(1,4,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	sprintf(txt,"4. finished");
-	FTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-	sprintf(txt,"please touch 1~4 in button");
-	FTSPI_P8X16Str(1,6,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾	
-
+	TFTSPI_P8X16Str(1,5,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+	sprintf(txt,"1~4");
+	TFTSPI_P8X16Str(1,6,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 	while(1){
-		sprintf(txt,"cur_obacle_length %f",obacle_length);
-		FTSPI_P8X16Str(1,7,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+		uint32_t B1 = PIN_Read(Button1);
+		uint32_t B2 = PIN_Read(Button2);
+		uint32_t B3 = PIN_Read(Button3);
+		uint32_t B4 = PIN_Read(Button4);
+
+		sprintf(txt,"cur_v %f",V_speed);
+		TFTSPI_P8X16Str(1,7,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 		// ¼ì²â²¦Âë°´¼ü
-		if(1){
-			sprintf(txt,"add %f",(float)Change_ob);
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-			obacle_length += Change_ob;
+		if(!B1){
+			delayms(DELAYTIME);
+			sprintf(txt,"add %f",(float)Change_speed);
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			V_speed += Change_speed;
 		}
-		else if(2){
-			sprintf(txt,"sub %f",(float)Change_ob);
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
-			obacle_length -= Change_ob;		
+		else if(!B2){
+			delayms(DELAYTIME);
+			sprintf(txt,"sub %f",(float)Change_speed);
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			V_speed -= Change_speed;
 		}
-		else if(3){
+		else if(!B3){
+			delayms(DELAYTIME);
 			sprintf(txt,"reback");
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 			return 1;
 		}
-		else if(4){
+		else if(!B4){
+			delayms(DELAYTIME);
 			sprintf(txt,"finished");
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+			TFTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
 			return 2;
 		}
 	}
-	return 0;
 }
 void Test_terminal(void){
 	// ÏÔÊ¾ÆÁ
@@ -237,13 +268,13 @@ void Test_terminal(void){
 		uint32_t B2 = PIN_Read(Button2);
 		uint32_t B3 = PIN_Read(Button3);
 		uint32_t B4 = PIN_Read(Button4);
-		if((B1+B2+B3+B4) >= 2){
-			sprintf(txt,"end");
-			FTSPI_P8X16Str(1,8,txt,u16WHITE,u16BLACK);		//×Ö·û´®ÏÔÊ¾
+
+		if((B1+B2+B3+B4) <= 2){
 			break;
 		}
 		// ¼ì²â²¦Âë¿ª¹Ø×´Ì¬
-		if(B1){
+		if(!B1){
+			delayms(DELAYTIME);
 			state = Change_obacle_length();
 			if(state == 1){//
 				Print_Cmd();
@@ -252,7 +283,8 @@ void Test_terminal(void){
 				break;
 			}
 		}
-		else if(B2){
+		else if(!B2){
+			delayms(DELAYTIME);
 			state = Change_kp_();
 			if(state == 1){//
 				Print_Cmd();
@@ -261,7 +293,8 @@ void Test_terminal(void){
 				break;
 			}
 		}
-		else if(B3){
+		else if(!B3){
+			delayms(DELAYTIME);
 			state = Change_cut_down_len();
 			if(state == 1){//
 				Print_Cmd();
@@ -270,7 +303,8 @@ void Test_terminal(void){
 				break;
 			}
 		}
-		else if(B4){
+		else if(!B4){
+			delayms(DELAYTIME);
 			state = Change_Speed();
 			if(state == 1){//
 				Print_Cmd();

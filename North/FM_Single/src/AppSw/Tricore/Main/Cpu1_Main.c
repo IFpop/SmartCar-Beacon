@@ -37,9 +37,25 @@ int core1_main (void)
      Init_RDA5807();
 //     Test_RDA5807();
 
+    uint32_t Rda_count = 0;
+    unsigned char RSSI = 0;
     while(1)//主循环
     {
-    	VoiceProcess();
+    	RSSI=RDA5807_GetRssi();
+		if(RSSI < 30){  // 准备发车
+			Rda_count++;
+		}
+		else{ // 等待声音信号
+			Rda_count = 0;
+		}
+		if(Rda_count < 3){
+			VoiceProcess();
+		}
+		else{
+			vec.x = 0;
+			vec.y = 0;
+			vec.z = 0;
+		}
     }
 
 }

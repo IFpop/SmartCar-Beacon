@@ -41,9 +41,9 @@ extern uint32_t arrive_flag;    // 1 ±íÊ¾´ïµ½ÃğµÆ¾àÀë
 extern uint32_t dd;
 
 
-extern uint32_t Cut_down_len ;
+extern float Cut_down_len ;
 extern float obacle_length;   // ±ÜÕÏ¾àÀë
-extern float kp = 1.0;
+extern float kp;
 extern float V_speed;
 
 extern char txt[50];

@@ -28,6 +28,7 @@ IfxCpu_mutexLock mutevec = 0;
 
 struct vector3f_t vec = {0.0f,0.0f,0.0f};
 struct vector3f_t offset = {0.0f,0.0f,0.0f};
+
 uint32_t offset_flag = 0;
 uint32_t direct_flag = 0;   //默认在前方 1-前方  1--后方
 uint32_t arrive_flag = 0;   // 1 表示达到灭灯距离
@@ -36,7 +37,7 @@ float w_target = 0.0;
 uint32_t dd = 0;
 float S = 0.0;
 
-uint32_t Cut_down_len = 80;
+float Cut_down_len = 80;
 float obacle_length = 33.5;   // 避障距离
 float kp = 1.0;
 float V_speed = 3;
